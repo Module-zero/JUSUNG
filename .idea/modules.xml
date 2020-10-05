@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JUSUNG.iml" filepath="$PROJECT_DIR$/JUSUNG.iml" />
+      <module fileurl="file://$PROJECT_DIR$/startAlgo/startAlgo.iml" filepath="$PROJECT_DIR$/startAlgo/startAlgo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/알고리즘 시작/알고리즘 시작.iml" filepath="$PROJECT_DIR$/알고리즘 시작/알고리즘 시작.iml" />
+      <module fileurl="file://$PROJECT_DIR$/자료구조1/자료구조1.iml" filepath="$PROJECT_DIR$/자료구조1/자료구조1.iml" />
     </modules>
   </component>
 </project>
