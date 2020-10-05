@@ -1,2 +1,5 @@
-package PACKAGE_NAME;public class Q10828 {
+public class Q10828 {
+    public static void main(String[] args) {
+
+    }
 }
