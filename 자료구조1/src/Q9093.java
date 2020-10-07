@@ -12,7 +12,7 @@ public class Q9093 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int count = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < count; i++) {
+        while (count-- > 0) {
             String str = br.readLine();
 
             for (int j = 0; j < str.length(); j++) {
