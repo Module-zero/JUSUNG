@@ -7,7 +7,6 @@ public class Q6588 {
     static int[]prime = new int[1000000];
     static boolean[]check = new boolean[1000001];
 
-    // n이하의 소수들을 모두 prime배열에 넣는 함수
     public static void prime() {
         int nPrime = 0;
         for (int i = 2; i <= 1000000; i++) {
