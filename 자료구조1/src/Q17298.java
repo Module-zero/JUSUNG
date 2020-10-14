@@ -6,6 +6,7 @@ import java.util.StringTokenizer;
 
 // 정말 아무리 풀어도 시간초과가 나서 너무 힘든 문제였다...
 // 출력할 때 StringBuilder 꼭 쓰자... 무조건 쓰자....
+// 하긴 100만개의 숫자를 하나하나 찍으면 당연히 시간초과 날만 하지...
 public class Q17298 {
 
     public static void main(String[] args) throws IOException {
@@ -22,8 +23,7 @@ public class Q17298 {
             A[i] = Integer.parseInt(st.nextToken());
         }
 
-        stack.push(0);
-        for (int i = 1; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             if (stack.isEmpty()) {
                 stack.push(i);
             }
