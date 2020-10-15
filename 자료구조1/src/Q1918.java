@@ -13,23 +13,19 @@ public class Q1918 {
 
         for (int i = 0; i < exp.length(); i++) {
             if (exp.charAt(i) == '+' || exp.charAt(i) == '-' || exp.charAt(i) == '*' || exp.charAt(i) == '/') {
-                if (stack.isEmpty()) {
-                    stack.push(exp.charAt(i));
-                }
-                else {
+                if (!stack.isEmpty()) {
                     if (exp.charAt(i) == '*' || exp.charAt(i) == '/') {
                         while (!stack.isEmpty() && (stack.peek() == '*' || stack.peek() == '/')) {
                             answer.append(stack.pop());
                         }
-                        stack.push(exp.charAt(i));
                     }
                     else {
                         while (!stack.isEmpty()) {
                             answer.append(stack.pop());
                         }
-                        stack.push(exp.charAt(i));
                     }
                 }
+                stack.push(exp.charAt(i));
             }
             else if (exp.charAt(i) == '(') {
                 StringBuilder subExp = new StringBuilder();
