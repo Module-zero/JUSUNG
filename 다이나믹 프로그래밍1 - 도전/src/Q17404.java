@@ -13,8 +13,8 @@ public class Q17404 {
         int[][] A = new int[n+1][3];
         int[][] D = new int[n+1][3];
         int answer = Integer.MAX_VALUE;
-
         StringTokenizer st = null;
+
         for (int i = 1; i <= n; i++) {
             st = new StringTokenizer(br.readLine(), " ");
             for (int j = 0; j <= 2; j++) {
