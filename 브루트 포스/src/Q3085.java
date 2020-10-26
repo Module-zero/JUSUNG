@@ -12,7 +12,6 @@ import java.util.Arrays;
 public class Q3085 {
 
     static char[][] candyBox;
-    static char[] oneLine;
     static int n;
 
     public static void main(String[] args) throws IOException {
@@ -35,75 +34,70 @@ public class Q3085 {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n-1; j++) {
 
-                // swap
-                tmp = candyBox[i][j];
-                candyBox[i][j] = candyBox[i][j+1];
-                candyBox[i][j+1] = tmp;
+                swap(i, j, i, j+1);
 
-                oneLine = new char[n];
-                for (int k = 0; k < n; k++) {
-                    oneLine[k] = candyBox[k][j];
-                } a = func();
+                char[] line1 = new char[n];
+                char[] line2 = new char[n];
+                char[] line3 = new char[n];
 
-                oneLine = new char[n];
                 for (int k = 0; k < n; k++) {
-                    oneLine[k] = candyBox[k][j+1];
-                } b = func();
+                    line1[k] = candyBox[k][j];
+                    line2[k] = candyBox[k][j+1];
+                    line3[k] = candyBox[i][k];
+                }
 
-                oneLine = new char[n];
-                for (int k = 0; k < n; k++) {
-                    oneLine[k] = candyBox[i][k];
-                } c = func();
+                a = maxOneLine(line1);
+                b = maxOneLine(line2);
+                c = maxOneLine(line3);
 
                 if (max < Integer.max(Integer.max(a, b), c)) {
                     max = Integer.max(Integer.max(a, b), c);
                 }
 
-                // re-swap
-                tmp = candyBox[i][j];
-                candyBox[i][j] = candyBox[i][j+1];
-                candyBox[i][j+1] = tmp;
+                // 배열을 원상복귀 시켜놓음(re-swap)
+                swap(i, j, i, j+1);
             }
         }
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n-1; j++) {
 
-                // swap
-                tmp = candyBox[j][i];
-                candyBox[j][i] = candyBox[j+1][i];
-                candyBox[j+1][i] = tmp;
+                swap(j, i, j+1, i);
 
-                oneLine = new char[n];
-                for (int k = 0; k < n; k++) {
-                    oneLine[k] = candyBox[j][k];
-                } a = func();
+                char[] line1 = new char[n];
+                char[] line2 = new char[n];
+                char[] line3 = new char[n];
 
-                oneLine = new char[n];
                 for (int k = 0; k < n; k++) {
-                    oneLine[k] = candyBox[j+1][k];
-                } b = func();
+                    line1[k] = candyBox[j][k];
+                    line2[k] = candyBox[j+1][k];
+                    line3[k] = candyBox[k][i];
+                }
 
-                oneLine = new char[n];
-                for (int k = 0; k < n; k++) {
-                    oneLine[k] = candyBox[k][i];
-                } c = func();
+                a = maxOneLine(line1);
+                b = maxOneLine(line2);
+                c = maxOneLine(line3);
 
                 if (max < Integer.max(Integer.max(a, b), c)) {
                     max = Integer.max(Integer.max(a, b), c);
                 }
 
-                // re-swap
-                tmp = candyBox[j][i];
-                candyBox[j][i] = candyBox[j+1][i];
-                candyBox[j+1][i] = tmp;
+                // 배열을 원상복귀 시켜놓음(re-swap)
+                swap(j, i, j+1, i);
             }
         }
 
         System.out.println(max);
     }
 
-    static int func() {
+    static void swap(int idx1, int idx2, int idx3, int idx4) {
+        char tmp = candyBox[idx1][idx2];
+        candyBox[idx1][idx2] = candyBox[idx3][idx4];
+        candyBox[idx3][idx4] = tmp;
+    }
+
+    static int maxOneLine(char[] oneLine) {
+
         int[] tmp = new int[n];
         int cur = 0;
 
