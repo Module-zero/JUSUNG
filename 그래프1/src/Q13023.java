@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 // 접근법 :
-// DFS 를 사용함. 그래프에 단순경로가 4인 경로(깊이가 4인 경로)가 있는지 찾는 문제였음
-// DFS 는 깊이우선탐색이므로 그래프에서 깊이를 찾을 때 유용함
+// dfs 를 사용함. 그래프에 단순경로가 4인 경로(깊이가 4인 경로)가 있는지 찾는 문제였음
+
+// 이유 :
+// dfs 는 깊이우선탐색이므로 그래프에서 깊이를 찾을 때 유용함
 public class Q13023 {
 
     static int n;
