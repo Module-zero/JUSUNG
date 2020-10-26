@@ -4,6 +4,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+// 접근법 :
+// DFS 를 사용함. 그래프에 단순경로가 4인 경로(깊이가 4인 경로)가 있는지 찾는 문제였음
+// DFS 는 깊이우선탐색이므로 그래프에서 깊이를 찾을 때 유용함
 public class Q13023 {
 
     static int n;
@@ -66,37 +69,39 @@ public class Q13023 {
         // 한번 방문한 정점도 다시 방문하지 않은것으로 표시해야함
         check[x] = false;
     }
-}
 
-// 인접리스트 클래스
-class GraphList {
+    // 인접리스트 클래스
+   static class GraphList {
 
-    private ArrayList<ArrayList<Integer>> list;
+        private ArrayList<ArrayList<Integer>> list;
 
-    public GraphList(int listSize) {
-        list = new ArrayList<>();
-        for (int i = 0; i < listSize; i++) {
-            list.add(new ArrayList<Integer>());
+        public GraphList(int listSize) {
+            list = new ArrayList<>();
+            for (int i = 0; i < listSize; i++) {
+                list.add(new ArrayList<Integer>());
+            }
+        }
+
+        public ArrayList<ArrayList<Integer>> getList() {
+            return this.list;
+        }
+
+        // 양방향 그래프 추가
+        public void put(int x, int y) {
+            list.get(x).add(y);
+            list.get(y).add(x);
+        }
+
+        // 그래프 출력
+        public void printGraph() {
+            for(int i = 0; i < list.size(); i++) {
+                System.out.print("정점 " + i + "의 인접리스트");
+                for(int j = 0; j < list.get(i).size(); j++) {
+                    System.out.print(" -> " + list.get(i).get(j));
+                } System.out.println();
+            }
         }
     }
-
-    public ArrayList<ArrayList<Integer>> getList() {
-        return this.list;
-    }
-
-    // 양방향 그래프 추가
-    public void put(int x, int y) {
-        list.get(x).add(y);
-        list.get(y).add(x);
-    }
-
-    // 그래프 출력
-    public void printGraph() {
-        for(int i = 0; i < list.size(); i++) {
-            System.out.print("정점 " + i + "의 인접리스트");
-            for(int j = 0; j < list.get(i).size(); j++) {
-                System.out.print(" -> " + list.get(i).get(j));
-            } System.out.println();
-        }
-    }
 }
+
+
