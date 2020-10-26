@@ -1,21 +1,24 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.StringTokenizer;
 
 // 접근법 :
-// dfs 는 재귀로, bfs 는 큐로 구현
-public class Q1260 {
+// dfs 혹은 bfs 를 사용
+
+// 이유 :
+// dfs, bfs 는 '연결되어있는 노드' 라면 반드시 방문함
+// 연결되어있지 않으면 절대 방문하지 않음
+// 따라서 한 정점에서 시작하여 한번의 탐색만으로도 연결되어있는 모든 노드가 방문된 것으로 체크됨
+public class Q11724 {
 
     static int n;
     static int m;
-    static int startV;
     static GraphList graph;
-
-    static boolean[] dfsCheck;
-    static StringBuilder dfsAnswer;
-    static boolean[] bfsCheck;
-    static StringBuilder bfsAnswer;
+    static boolean[] check;
+    static int count;
 
     public static void main(String[] args) throws IOException {
 
@@ -23,12 +26,9 @@ public class Q1260 {
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
-        startV = Integer.parseInt(st.nextToken());
         graph = new GraphList(n);
-        dfsCheck = new boolean[n + 1];
-        dfsAnswer = new StringBuilder();
-        bfsCheck = new boolean[n + 1];
-        bfsAnswer = new StringBuilder();
+        check = new boolean[n + 1];
+        count = 0;
 
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine(), " ");
@@ -37,43 +37,21 @@ public class Q1260 {
             graph.put(v1, v2);
         }
 
-        graph.sort();
-
-        dfs(startV);
-        dfsAnswer.deleteCharAt(dfsAnswer.length() - 1);
-        System.out.println(dfsAnswer);
-
-        bfs(startV);
-        bfsAnswer.deleteCharAt(bfsAnswer.length() - 1);
-        System.out.print(bfsAnswer);
+        for (int i = 1; i <= n; i++) {
+            if (check[i] == false) {
+                dfs(i);
+                count++;
+            }
+        }
+        System.out.print(count);
     }
 
     static void dfs(int x) {
-        dfsAnswer.append(x + " ");
-        dfsCheck[x] = true;
-
+        check[x] = true;
         for (int i = 0; i < graph.getList().get(x).size(); i++) {
             int v = graph.getList().get(x).get(i);
-            if (dfsCheck[v] == false) {
+            if (check[v] == false) {
                 dfs(v);
-            }
-        }
-    }
-
-    static void bfs(int x) {
-        LinkedList<Integer> queue = new LinkedList<>();
-        bfsCheck[x] = true;
-        queue.add(x);
-
-        while (!queue.isEmpty()) {
-            int front = queue.poll();
-            bfsAnswer.append(front + " ");
-            for (int i = 0; i < graph.getList().get(front).size(); i++) {
-                int v = graph.getList().get(front).get(i);
-                if (bfsCheck[v] == false) {
-                    bfsCheck[v] = true;
-                    queue.add(v);
-                }
             }
         }
     }
