@@ -10,7 +10,7 @@ public class Q13023 {
     static int m;
     static GraphList graph = null;
     static boolean[] check = null;
-    static int answer = 0;
+    static int answer;
 
     public static void main(String[] args) throws IOException {
 
@@ -20,6 +20,7 @@ public class Q13023 {
         m = Integer.parseInt(st.nextToken());   // 친구 관계의 수
         graph = new GraphList(n);
         check = new boolean[n];
+        answer = 0;
 
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine(), " ");
@@ -30,6 +31,8 @@ public class Q13023 {
 
         // graph.printGraph();
 
+        // 단순경로가 4인 경로를 찾는다
+        // 이 때, 모든 정점에서 경로를 찾아보아야함
         for (int i = 0; i < n; i++) {
 
             dfs(i, 0);
@@ -50,12 +53,17 @@ public class Q13023 {
         }
 
         check[x] = true;
+
         for (int i = 0; i < graph.getList().get(x).size(); i++) {
             int v = graph.getList().get(x).get(i);
             if (check[v] == false) {
                 dfs(v, depth + 1);
             }
         }
+
+        // 한번 탐색하고 끝이 아니라
+        // 계속 새로운 경로를 탐색해야하므로
+        // 한번 방문한 정점도 다시 방문하지 않은것으로 표시해야함
         check[x] = false;
     }
 }
