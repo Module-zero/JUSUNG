@@ -33,8 +33,7 @@ public class Q14501 {
         System.out.println("day : " + day);
         System.out.println("sum : " + sum + "\n");
 
-        if (day == n) {
-            sum += P[day];
+        if (day == n+1) {
             if (max < sum) {
                 max = sum;
             }
