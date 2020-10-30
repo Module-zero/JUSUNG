@@ -3,6 +3,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+// 재귀를 사용한 브루트 포스
+
+// 역시 다른 문제들과 마찬가지로 상담일자를 경우에 따라 차례차례 접근하는 것이므로
+// 재귀를 통해 모든 경우를 돌아보며 체크하는 방식을 택함
 public class Q14501 {
 
     static int n;
