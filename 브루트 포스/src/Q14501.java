@@ -29,18 +29,19 @@ public class Q14501 {
         System.out.print(max);
     }
 
+    // day : 현재 일자
+    // sum : day 일 전까지 상담으로 얻은 금액
     static void go(int day, int sum) {
-        System.out.println("day : " + day);
-        System.out.println("sum : " + sum + "\n");
 
-        if (day == n+1) {
-            if (max < sum) {
-                max = sum;
+        // 현재 일자의 상담을 진행할 경우
+        // n 일을 초과하는지를 확인
+        if (day + T[day] > n) {
+
+            // 상담이 정확히 n 일에 딱 채워지는 경우
+            if (day + T[day] == n+1) {
+                sum += P[day];
             }
-            return;
-        }
 
-        if (day > n) {
             if (max < sum) {
                 max = sum;
             }
@@ -51,19 +52,4 @@ public class Q14501 {
             go(i, sum + P[day]);
         }
     }
-
-    /*
-    static void go(int day, int sum) {
-
-        for (int i = day; i <= n; i++) {
-            if (day + T[day] > n) {
-                if (max < sum) {
-                    max = sum;
-                }
-                return;
-            }
-            go(day + T[i], sum + P[i]);
-        }
-    }
-     */
 }
