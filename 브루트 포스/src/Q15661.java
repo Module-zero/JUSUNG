@@ -3,11 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-// 재귀를 활용한 브루트 포스
-
-// n 의 범위가 작으므로 브루트 포스 가능
-
-public class Q14889 {
+public class Q15661 {
 
     static int n;
     static int[][] team;
@@ -27,17 +23,21 @@ public class Q14889 {
         }
 
         answer = new int[n];
-        go(0, 1);
+
+        // i 명, n-i 명으로 팀이 나뉘는 경우
+        for (int i = 1; i <= n/2; i++) {
+            go(0, 1, i);
+        }
         System.out.print(diff);
     }
 
-    static void go(int index, int start) {
+    static void go(int index, int start, int endPoint) {
 
-        if (index == n/2) {
-            int[] startTeam = new int[n/2];
-            int[] linkTeam = new int[n/2];
+        if (index == endPoint) {
+            int[] startTeam = new int[endPoint];
+            int[] linkTeam = new int[n-endPoint];
             boolean[] check = new boolean[n+1];
-            for (int i = 0; i < n/2; i++) {
+            for (int i = 0; i < endPoint; i++) {
                 startTeam[i] = answer[i];
                 check[answer[i]] = true;
             }
@@ -82,22 +82,24 @@ public class Q14889 {
             for (i = 0; i < linkTeam.length; i++) {
                 System.out.print(linkTeam[i] + " ");
             } System.out.println();
-            System.out.println("diff : " + diff);
-            */
+            System.out.println("diff : " + diff + "\n");
+             */
 
             return;
         }
 
         for (int i = start; i <= n; i++) {
 
+            /*
             // 정답 배열의 첫번째 자리수가 처음으로 바뀌면 함수 종료
             // 이후에 나오는 탐색은 무의미함
             if (index == 0 && i == 2) {
                 return;
             }
+             */
 
             answer[index] = i;
-            go(index+1, i+1);
+            go(index+1, i+1, endPoint);
         }
     }
 }
