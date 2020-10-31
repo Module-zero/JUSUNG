@@ -3,6 +3,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+// 재귀를 활용한 브루트 포스
+
+// n 의 범위가 작으므로 브루트 포스 가능
+
 public class Q14889 {
 
     static int n;
@@ -37,6 +41,7 @@ public class Q14889 {
                 startTeam[i] = answer[i];
                 check[answer[i]] = true;
             }
+
             int i = 1;
             int j = 0;
             while (i <= n) {
@@ -45,17 +50,6 @@ public class Q14889 {
                 }
                 i++;
             }
-
-            /*
-            System.out.print("startTeam : ");
-            for (i = 0; i < startTeam.length; i++) {
-                System.out.print(startTeam[i] + " ");
-            } System.out.println();
-            System.out.print("linkTeam : ");
-            for (i = 0; i < linkTeam.length; i++) {
-                System.out.print(linkTeam[i] + " ");
-            } System.out.println();
-             */
 
             int startTeamSum = 0;
             for (i = 0; i < startTeam.length-1; i++) {
