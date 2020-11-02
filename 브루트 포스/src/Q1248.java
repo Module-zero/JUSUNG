@@ -3,6 +3,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+// 재귀를 활용한 백트래킹
+
+// 결과적으로는 탐색을 통해 순열을 구하는 문제임
+// 즉 일단은 모든 경우의 수를 재귀를 통해 구하는 방법을 도입할 수 있음
+// 그런데 해당 문제는 모든 경우의 수를 구할 경우 시간초과가 발생함
+// 백트래킹은 구할 수 있는 모든 경우의 수를 구하는 과정에서 필요없는 과정은 제하는 방법임
+// 따라서 해당 과정에서 불필요한 재귀는 수행하지 않도록 해야함
+
+// 문제를 이해하는데 시간이 오래걸림
+// 주어진 조건을 잘 활용하지 못함
+// 전반적인 구현 능력이 아직 부족함
+
 public class Q1248 {
 
     static int N;
@@ -20,7 +32,6 @@ public class Q1248 {
                 sb.deleteCharAt(0);
             }
         }
-
         go(0);
     }
 
