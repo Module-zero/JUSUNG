@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class Q2529 {
@@ -34,9 +33,7 @@ public class Q2529 {
     static void go(int index, String num) {
 
         if (index == k + 1) {
-            if (pass(num) == true) {
-                list.add(num);
-            }
+            list.add(num);
             return;
         }
 
@@ -44,29 +41,32 @@ public class Q2529 {
             if (check[i] == true) {
                 continue;
             }
-            check[i] = true;
-            go(index+1, num+Integer.toString(i));
-            check[i] = false;
+            if (index == 0) {
+                check[i] = true;
+                go(index + 1, num + Integer.toString(i));
+                check[i] = false;
+            }
+            else {
+                if (good(ieq[index-1], num.charAt(num.length()-1), Integer.toString(i).charAt(0))) {
+                    check[i] = true;
+                    go(index + 1, num + Integer.toString(i));
+                    check[i] = false;
+                }
+            }
         }
     }
 
-    static boolean pass(String num) {
-
-        boolean res = true;
-        for (int i = 0; i < ieq.length; i++) {
-            if (ieq[i] == '<') {
-                if (num.charAt(i) > num.charAt(i+1)) {
-                    res = false;
-                    break;
-                }
-            }
-            else {
-                if (num.charAt(i) < num.charAt(i+1)) {
-                    res = false;
-                    break;
-                }
+    static boolean good(char ieq, char a, char b) {
+        if (ieq == '<') {
+            if (a > b) {
+               return false;
             }
         }
-        return res;
+        else {
+            if (a < b) {
+                return false;
+            }
+        }
+        return true;
     }
 }
