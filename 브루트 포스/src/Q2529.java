@@ -4,6 +4,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+// 재귀를 활용한 백트래킹
+
+// 브루트포스로 풀어도 답은 나온다
+// 그러나 정답 문자열을 만들어나가는 과정에서
+// 부등호에 맞지 않는 수는 애초에 탈락시켜버림으로서
+// 시간을 훨씬 줄일 수 있다
 public class Q2529 {
 
     static int k;
@@ -41,12 +47,15 @@ public class Q2529 {
             if (check[i] == true) {
                 continue;
             }
+            // index 가 0 일때는 부등호를 신경쓰지 않아도 됨
             if (index == 0) {
                 check[i] = true;
                 go(index + 1, num + Integer.toString(i));
                 check[i] = false;
             }
             else {
+                // index > 0 일 때부터는 부등호 검사를 하면서
+                // 부등호가 맞지 않는 수는 아예 이어붙이지않음
                 if (good(ieq[index-1], num.charAt(num.length()-1), Integer.toString(i).charAt(0))) {
                     check[i] = true;
                     go(index + 1, num + Integer.toString(i));
