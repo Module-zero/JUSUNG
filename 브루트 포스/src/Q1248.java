@@ -8,7 +8,6 @@ public class Q1248 {
     static int N;
     static char[][] S;
     static ArrayList<Integer> A = new ArrayList<>();
-    static boolean endFlag = false;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -32,7 +31,8 @@ public class Q1248 {
                 System.out.print(i + " ");
             } System.out.println();
 
-            // 최초의 답을 찾으면 끝
+            // 최초의 답을 찾으면 true 를 리턴해서
+            // 재귀를 전부 빠져나가도록 함
             return true;
         }
 
@@ -51,7 +51,7 @@ public class Q1248 {
         int end = S[index][index] == '-' ? -1 : 10;
         for (int i = start; i <= end; i++) {
             A.add(i);
-            // index 에 i 가 들어갈 수 있는지를 체크함
+            // index 의 위치에 i 가 들어갈 수 있는지를 체크함
             if (check(index, i) == false) {
                 A.remove(A.size() - 1);
                 continue;
