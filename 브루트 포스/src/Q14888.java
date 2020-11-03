@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
+// 가능한 모든 연산자의 조합을 구하는 문제
+
+// 재귀를 사용한 브루트 포스
+// 모든 조합의 경우의 수를 구하는 문제이므로
+
+// 훨씬 빠른 방법이 존재함
+// 재귀를 돌면서 조금씩 합을 구하는 방식이 있음
+// 변수 이름을 훨씬 직관적으로 지어야함
 public class Q14888 {
 
     static int N;
@@ -61,9 +69,7 @@ public class Q14888 {
         }
 
         for (int i = 0; i < N-1; i++) {
-            if (check[i] == true) {
-                continue;
-            }
+            if (check[i] == true) { continue; }
             check[i] = true;
             oneCase[index] = operators.get(i);
             go(index + 1);
