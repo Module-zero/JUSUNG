@@ -13,7 +13,6 @@ public class Q14888 {
     static ArrayList<Integer> operators2 = new ArrayList<>();
     static int[] operators3 = null;
     static boolean[] check = null;
-    static boolean zeroDivideFlag = false;
     static ArrayList<Integer> answers = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
@@ -23,9 +22,8 @@ public class Q14888 {
         A = new int[N];
         operators3 = new int[N-1];
         check = new boolean[N-1];
-        StringTokenizer st = null;
 
-        st = new StringTokenizer(br.readLine(), " ");
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         for (int i = 0; i < N; i++) {
             A[i] = Integer.parseInt(st.nextToken());
         }
@@ -33,29 +31,8 @@ public class Q14888 {
         st = new StringTokenizer(br.readLine(), " ");
         for (int i = 0; i < 4; i++) {
             operators1[i] = Integer.parseInt(st.nextToken());
-            switch (i) {
-                case 0:
-                    while (operators1[i]-- > 0) {
-                        operators2.add(0);
-                    }
-                    break;
-                case 1:
-                    while (operators1[i]-- > 0) {
-                        operators2.add(1);
-                    }
-                    break;
-                case 2:
-                    while (operators1[i]-- > 0) {
-                        operators2.add(2);
-                    }
-                    break;
-                case 3:
-                    while (operators1[i]-- > 0) {
-                        operators2.add(3);
-                    }
-                    break;
-                default:
-                    break;
+            while (operators1[i]-- > 0) {
+                operators2.add(i);
             }
         }
 
@@ -69,15 +46,9 @@ public class Q14888 {
     static void go(int index) {
 
         if (index == N-1) {
-
             // 연산 진행
             int val = calculate();
-            if (zeroDivideFlag == false) {
-                answers.add(val);
-            }
-            else {
-                zeroDivideFlag = false;
-            }
+            answers.add(val);
             return;
         }
 
@@ -106,12 +77,7 @@ public class Q14888 {
                     B[i+1] *= B[i];
                     break;
                 case 3:
-                    if (B[i+1] != 0) {
-                        B[i+1] = B[i] / B[i+1];
-                    }
-                    else {
-                        zeroDivideFlag = true;
-                    }
+                    B[i+1] = B[i] / B[i+1];
                     break;
                 default:
                     break;
