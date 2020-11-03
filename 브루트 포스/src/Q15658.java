@@ -3,6 +3,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+// 연산자 수열의 경우의 수를 구하는 문제이지만
+// 그렇게 풀어서는 시간초과로 답을 구할 없음
+// 재귀를 활용하되 다른 방법을 사용해야함
+
+// 재귀를 사용할 때 가능하면 배열같은 저장공간에 답을 저장하기 보다는
+// 재귀를 진행하면서 정답을 조금씩 완성해나가는 방식이 메모리 절약에 도움이 됨
+
+// 항상 순서도를 거의 완벽하게 그린 뒤 코딩하는 것이 좋음
+
 public class Q15658 {
 
     static int N;
@@ -27,8 +36,7 @@ public class Q15658 {
         int mult = Integer.parseInt(st.nextToken());
         int div = Integer.parseInt(st.nextToken());
 
-        // go(1, A[0], plus, sub, mult, div);
-        go(0, 0, plus, sub, mult, div);
+        go(1, A[0], plus, sub, mult, div);
 
         System.out.println(max);
         System.out.print(min);
