@@ -9,10 +9,18 @@ public class Q14888 {
 
     static int N;
     static int[] A;
-    static int[] operators1 = new int[4];
-    static ArrayList<Integer> operators2 = new ArrayList<>();
-    static int[] operators3 = null;
-    static boolean[] check = null;
+
+    // 각 연산자의 개수를 저장
+    static int[] nOperators = new int[4];
+
+    // 연산자들을 0,1,2,3으로 저장
+    static ArrayList<Integer> operators = new ArrayList<>();
+
+    // 연산자 조합의 하나의 케이스를 저장
+    static int[] oneCase;
+    static boolean[] check;
+
+    // 정답 후보(최대값, 최소값)들을 저장
     static ArrayList<Integer> answers = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
@@ -20,8 +28,8 @@ public class Q14888 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
         A = new int[N];
-        operators3 = new int[N-1];
         check = new boolean[N-1];
+        oneCase = new int[N-1];
 
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         for (int i = 0; i < N; i++) {
@@ -30,9 +38,9 @@ public class Q14888 {
 
         st = new StringTokenizer(br.readLine(), " ");
         for (int i = 0; i < 4; i++) {
-            operators1[i] = Integer.parseInt(st.nextToken());
-            while (operators1[i]-- > 0) {
-                operators2.add(i);
+            nOperators[i] = Integer.parseInt(st.nextToken());
+            while (nOperators[i]-- > 0) {
+                operators.add(i);
             }
         }
 
@@ -46,7 +54,7 @@ public class Q14888 {
     static void go(int index) {
 
         if (index == N-1) {
-            // 연산 진행
+            // 도출된 하나의 연산자 조합 케이스를 가지고 연산 진행
             int val = calculate();
             answers.add(val);
             return;
@@ -57,7 +65,7 @@ public class Q14888 {
                 continue;
             }
             check[i] = true;
-            operators3[index] = operators2.get(i);
+            oneCase[index] = operators.get(i);
             go(index + 1);
             check[i] = false;
         }
@@ -66,16 +74,20 @@ public class Q14888 {
     static int calculate() {
         int[] B = A.clone();
         for (int i = 0; i < N-1; i++) {
-            switch (operators3[i]) {
+            switch (oneCase[i]) {
+                // '+'
                 case 0:
                     B[i+1] += B[i];
                     break;
+                // '-'
                 case 1:
                     B[i+1] = B[i] - B[i+1];
                     break;
+                // '*'
                 case 2:
                     B[i+1] *= B[i];
                     break;
+                // '/'
                 case 3:
                     B[i+1] = B[i] / B[i+1];
                     break;
