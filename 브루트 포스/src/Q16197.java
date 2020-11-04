@@ -41,6 +41,10 @@ public class Q16197 {
         }
 
         go(x1, y1, x2, y2, 0, 0, 0);
+
+        for (Integer i : answers) {
+            System.out.print(i + " ");
+        }
     }
 
     static void go(int x1, int y1, int x2, int y2, int backX, int backY, int count) {
@@ -55,18 +59,19 @@ public class Q16197 {
                 return;
             }
 
-            if (board[x1][y1] == '*') {
+            if (board[x1][y1] == '#') {
                 x1 += backX;
                 y1 += backY;
             }
 
-            if (board[x2][y2] == '*') {
+            if (board[x2][y2] == '#') {
                 x2 += backX;
                 y2 += backY;
             }
         }
 
         if (check(x1, y1) && check(x2, y2)) {
+            System.out.println("둘 다 떨어짐");
             return;
         }
 
@@ -80,13 +85,24 @@ public class Q16197 {
             return;
         }
 
-        go(x1-1, y1, x2-1, y2, 1, 0, count+1);
-        go(x1+1, y1, x2+1, y2, -1, 0, count+1);
+        // 왔던 곳으로 되돌아가지 않도록 함
+        if (backX != -1) {
+            go(x1 - 1, y1, x2 - 1, y2, 1, 0, count + 1);
+        }
+
+        if (backX != 1) {
+            go(x1 + 1, y1, x2 + 1, y2, -1, 0, count + 1);
+        }
 
         System.out.println("check");
 
-        go(x1, y1-1, x2, y2-1, 0, 1, count+1);
-        go(x1, y1+1, x2, y2+1, 0, -1, count+1);
+        if (backY != -1) {
+            go(x1, y1 - 1, x2, y2 - 1, 0, 1, count + 1);
+        }
+
+        if (backY != 1) {
+            go(x1, y1 + 1, x2, y2 + 1, 0, -1, count + 1);
+        }
 
         return;
     }
