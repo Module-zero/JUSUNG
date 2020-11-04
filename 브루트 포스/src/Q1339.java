@@ -45,7 +45,6 @@ public class Q1339 {
         System.out.print(max);
     }
 
-    // 수열을 오름차순으로 뽑아내면 자동으로 중복은 없게됨
     static void go(int index) {
 
         if (index == nVaildAlpha) {
