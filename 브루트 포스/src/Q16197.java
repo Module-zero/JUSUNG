@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class Q16197 {
@@ -11,7 +10,8 @@ public class Q16197 {
     static int M;
     static char[][] board;
     static boolean[][] check;
-    static ArrayList<Integer> answers = new ArrayList<>();
+    static int min = Integer.MAX_VALUE;
+    static ArrayList<Integer> loc;
 
     public static void main(String[] args) throws IOException {
 
@@ -21,109 +21,103 @@ public class Q16197 {
         M = Integer.parseInt(st.nextToken());
         board = new char[N][M];
         check = new boolean[N][M];
-
-        int x1 = -1;
-        int y1 = -1;
-        int x2 = -1;
-        int y2 = -1;
+        loc = new ArrayList<>();
 
         for (int i = 0; i < N; i++) {
             String s = br.readLine();
             for (int j = 0; j < M; j++) {
                 board[i][j] = s.charAt(j);
                 if (board[i][j] == 'o') {
-                    if (x1 == -1) {
-                        x1 = i;
-                        y1 = j;
-                    }
-                    else {
-                        x2 = i;
-                        y2 = j;
-                    }
+                    loc.add(i);
+                    loc.add(j);
                 }
             }
         }
 
-        go(x1, y1, x2, y2, 0, 0, 0);
+        go(loc.get(0), loc.get(1), loc.get(2), loc.get(3), 0, 0, 0);
 
-        Collections.sort(answers);
-        if (answers.size() == 0) {
+        if (min == Integer.MAX_VALUE) {
             System.out.print(-1);
         }
         else {
-            System.out.print(answers.get(0));
+            System.out.print(min);
         }
     }
 
     static void go(int x1, int y1, int x2, int y2, int backX, int backY, int count) {
 
-        /*
-        System.out.print(x1 + "," + y1 + " / ");
-        System.out.println(x2 + "," + y2);
-         */
-
+        // 재귀 호출을 10번 넘게 할 경우 리턴
         if (count > 10) {
             return;
         }
 
+        // 두 동전이 같은 위치에 있게되면 이 후 하나만 떨어지는 경우는 발생하지 않으므로 리턴
         if ((x1 == x2) && (y1 == y2)) {
             return;
         }
 
+        // 두 동전이 동시에 떨어진 경우 리턴
         if (check(x1, y1) && check(x2, y2)) {
-            // System.out.println("둘 다 떨어짐\n");
             return;
         }
 
-        if (check(x1, y1) && !check(x2, y2)) {
-            // System.out.println("1번 동전만 떨어짐\n");
-            answers.add(count);
+        // 한 동전만 떨어진 경우 정답 후보 검사
+        if ((check(x1, y1) && !check(x2, y2)) || (!check(x1, y1) && check(x2, y2))) {
+            if (min > count) {
+                min = count;
+            }
             return;
         }
 
-        if (!check(x1, y1) && check(x2, y2)) {
-            // System.out.println("2번 동전만 떨어짐\n");
-            answers.add(count);
-            return;
-        }
-
+        // 여기까지 과정에 해당하지 않을 경우 두 동전은 일단 반드시 보드 안에 있는 경우임
+        // 두 동전 모두 벽을 만난 경우 리턴
         if (board[x1][y1] == '#' && board[x2][y2] == '#') {
-            // System.out.println("둘 다 벽 만남\n");
             return;
         }
 
+        // 1번 동전만 벽을 만난 경우 1번 동전의 위치만 원상복귀
         if (board[x1][y1] == '#' && board[x2][y2] != '#') {
-            // System.out.println("1번 동전만 벽 만남");
             x1 += backX;
             y1 += backY;
         }
 
+        // 2번 동전만 벽을 만난 경우 2번 동전의 위치만 원상복귀
         if (board[x1][y1] != '#' && board[x2][y2] == '#') {
-            // System.out.println("2번 동전만 벽 만남");
             x2 += backX;
             y2 += backY;
         }
 
+        // 여기까지의 과정에 해당하지 않을 경우 현 위치에서 다시 모든 방향으로 이동가능
+        // 그러나 현 위치에서의 탐색을 이전에 진행했던 경우에는 중복탐색을 막기 위해 리턴
         if (check[x1][y1] && check[x2][y2]) {
             return;
         }
 
-        // 왔던 곳으로 되돌아가지 않도록 함
+        // 이후 재귀 과정에서 중복탐색을 막음
         check[x1][y1] = check[x2][y2] = true;
+
+        // 위 방향으로 이동
         go(x1 - 1, y1, x2 - 1, y2, 1, 0, count + 1);
+
+        // 아래 방향으로 이동
         go(x1 + 1, y1, x2 + 1, y2, -1, 0, count + 1);
+
+        // 왼쪽 방향으로 이동
         go(x1, y1 - 1, x2, y2 - 1, 0, 1, count + 1);
+
+        // 오른쪽 방향으로 이동
         go(x1, y1 + 1, x2, y2 + 1, 0, -1, count + 1);
+
         check[x1][y1] = check[x2][y2] = false;
     }
 
+    // 좌표가 보드를 벗어났는지를 체크하는 함수
     static boolean check(int x, int y) {
-        if (x < 0 || x >= N) {
+        if ((x < 0 || x >= N) || (y < 0 || y >= M)) {
             return true;
         }
-        if (y < 0 || y >= M) {
-            return true;
+        else {
+            return false;
         }
-        return false;
     }
 }
