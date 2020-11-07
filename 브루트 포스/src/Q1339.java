@@ -6,8 +6,8 @@ public class Q1339 {
 
     static int N;
     static char[][] words;
-    static int[] alpha = new int[26];
     static int[] alphaToNum;
+    static int[] alpha = new int[26];
     static boolean[] check = new boolean[10];
     static int nVaildAlpha = 0;
     static int max = Integer.MIN_VALUE;
