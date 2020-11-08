@@ -63,6 +63,7 @@ public class Q14500 {
                 continue;
             }
 
+            // 이전 노드는 다시 올 수 없도록 함
             visited[x][y] = true;
             dfs(nextX, nextY, depth + 1, sum + paper[x][y]);
             visited[x][y] = false;
