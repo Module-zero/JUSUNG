@@ -41,14 +41,14 @@ public class Q9663 {
 
     static boolean possible(int index, int position) {
 
-        // 0 ~ index - 1 행까지 각 행의 퀸의 위치에 따라
-        // 현재행(index)의 퀸의 위치를 결정
+        // 0 ~ (index-1) 행까지 각 행의 퀸의 위치에 따라
+        // 현재행(index)의 position 에 퀸을 놓을 수 있는지를 결정
         for (int i = 0; i < index; i++) {
-            // 퀸과 같은 열에 있는 경우
+            // 퀸과 같은 열에 있는 경우 불가능
             if (check[i] == position) { return false; }
-            // 퀸의 오른쪽 아래 대각선에 있는 경우
+            // 퀸의 오른쪽 아래 대각선에 있는 경우 불가능
             if (check[i]+(index-i) == position) { return false; }
-            // 퀸의 왼쪽 아래 대각선에 있는 경우
+            // 퀸의 왼쪽 아래 대각선에 있는 경우 불가능
             if (check[i]-(index-i) == position) { return false; }
         }
 
