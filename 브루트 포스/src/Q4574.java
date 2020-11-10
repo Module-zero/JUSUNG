@@ -6,11 +6,11 @@ import java.util.StringTokenizer;
 public class Q4574 {
 
     static int[][] sudoku;
-    static int M;   // 주어지는 도미노의 개수
+    static boolean[][] domino;
     static boolean[][] c1;
     static boolean[][] c2;
     static boolean[][] c3;
-    static boolean[][] domino;
+    static int M;
     static int[] dx = {0, 1};
     static int[] dy = {1, 0};
 
@@ -20,10 +20,10 @@ public class Q4574 {
         int count = 1;
         while (true) {
             sudoku = new int[9][9];
+            domino = new boolean[10][10];
             c1 = new boolean[9][10];
             c2 = new boolean[9][10];
             c3 = new boolean[9][10];
-            domino = new boolean[10][10];
             M = Integer.parseInt(br.readLine());
             if (M == 0) { break; }
 
@@ -37,13 +37,24 @@ public class Q4574 {
                 int uy = LU.charAt(1)-'0'-1;
                 int vx = LV.charAt(0)-'A';
                 int vy = LV.charAt(1)-'0'-1;
+
                 sudoku[ux][uy] = U;
                 sudoku[vx][vy] = V;
+
+                // ux 행에 U라는 수가 존재하고
+                // uy 열에 U라는 수가 존재함을 표시
                 c1[ux][U] = c2[uy][U] = true;
                 c1[vx][V] = c2[vy][V] = true;
+
+                // (ux, uy) 가 속해있는 3*3 박스번호를 구함
                 int uBoxNum = (ux/3)*3 + uy/3;
                 int vBoxNum = (vx/3)*3 + vy/3;
-                c3[uBoxNum][U] = c3[vBoxNum][V] = true;
+
+                // uBoxNum 번 박스에 U라는 수가 존재함을 표시
+                c3[uBoxNum][U] = true;
+                c3[vBoxNum][V] = true;
+
+                // U, V 로 구성된 도미노가 존재함을 표시
                 domino[U][V] = domino[V][U] = true;
             }
 
@@ -62,56 +73,62 @@ public class Q4574 {
         }
     }
 
+    // index 는 (0, 0) ~ (80, 80) 까지의 좌표를 나타냄
     static boolean go(int index) {
 
+        // (80, 80) 까지 도달하였으므로 스도쿠 출력
         if (index == 81) {
             printSudoku();
+
+            // 답이 구해지면 true 를 리턴하여 모든 함수 종료
             return true;
         }
 
-        // 숫자 하나를 두개의 좌표로 표현
+        // 숫자 하나를 좌표로 표현
         int x = index / 9;
         int y = index % 9;
 
+        // 현재 위치가 비어있지 않을경우 다음 좌표로 이동
         if (sudoku[x][y] != 0) {
-            if (go(index + 1)) {
-                return true;
-            }
+           if (go(index+1)) {
+               return true;
+           }
         }
         else {
+            // 현재 위치가 비어있을 경우
+            // for 문(i)을 통해 도미노가 놓일 수 있는 2가지 경우를 체크
             for (int i = 0; i < 2; i++) {
+
+                // (nx, ny) 는 x, y 의 바로 오른쪽 혹은 바로 아래쪽 좌표가 됨
                 int nx = x + dx[i];
                 int ny = y + dy[i];
 
-                // 범위 체크
-                if (nx >= 9 || ny >= 9) {
+                // 도미노가 놓일 수 있는 범위인지
+                // 혹은 비어있는 칸이 아닌지를 체크
+                if (nx >= 9 || ny >= 9 || sudoku[nx][ny] != 0) {
                     continue;
                 }
 
-                // 비어있는 칸인지 확인
-                if (sudoku[nx][ny] != 0) {
-                    continue;
-                }
-
+                // 여기까지 도달하면 일단 도미노를 놓을 수는 있는 것이므로
+                // 하나의 도미노의 두개의 수에 0~9 를 모두 넣어본다
                 for (int j = 1; j <= 9; j++) {
                     for (int k = 1; k <= 9; k++) {
 
-                        // 도미노는 서로 다른 숫자로 구성되어있음
+                        // 도미노는 2개의 서로 다른 숫자로 구성되어 있어야함
                         if (j == k) {
                             continue;
                         }
 
+                        // 이미 존재하는 도미노임
                         if (domino[j][k] && domino[k][j]) {
                             continue;
                         }
 
-                        // (x,y) 에 j 가 들어갈 수 있는지 체크
-                        if (c1[x][j] || c2[y][j]) { continue; }
-                        if (c3[(x/3)*3 + y/3][j]) { continue; }
+                        // 스도쿠 체크 : (x,y) 에 j 가 들어갈 수 있는지 체크
+                        if (c1[x][j] || c2[y][j] || c3[(x/3)*3 + y/3][j]) { continue; }
 
-                        // (nx, ny) 에 k 가 들어갈 수 있는지 체크
-                        if (c1[nx][k] || c2[ny][k]) { continue; }
-                        if (c3[(nx/3)*3 + ny/3][k]) { continue; }
+                        // 스도쿠 체크 : (nx, ny) 에 k 가 들어갈 수 있는지 체크
+                        if (c1[nx][k] || c2[ny][k] || c3[(nx/3)*3 + ny/3][k]) { continue; }
 
                         c1[x][j] = c2[y][j] = c3[(x/3)*3 + y/3][j] = true;
                         c1[nx][k] = c2[ny][k] = c3[(nx/3)*3 + ny/3][k] = true;
