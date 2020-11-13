@@ -3,6 +3,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+// 최소 몇 번만에 빨간구슬을 구멍으로 빼낼 수 있을지는 구하는 문제였음
+// 빨간구슬을 빼낼 수 있는 모든 경우 체크하여 최소값을 갱신해야함
+// 재귀함수를 작성한 뒤 여러가지 종료조건들을 설정해야함
+
+// Main 함수에서 재귀함수를 호출할 때도 방문여부를 체크해야함
+// 문제의 종료조건을 재귀함수에 적용하지 않아 시간초과 발생함
+// 빨간구슬과 파란구슬은 동시에 움직이므로 방문배열은 4차원 배열을 사용해야함
+
 public class Q13460 {
 
     static int N;
@@ -47,6 +55,7 @@ public class Q13460 {
     // blockDir : 좌우 또는 상하로 반복해서 기울이는 경우를 방지하기 위한 변수
     static void go(int rx, int ry, int bx, int by, int depth, int blockDir) {
 
+        // 기울이는 회수가 10회가 넘어가는 경우 종료
         if (depth > 10) {
             return;
         }
@@ -58,7 +67,6 @@ public class Q13460 {
 
         // 파란구슬만 구멍에 들어가면 종료
         if (board[bx][by] == 'O') {
-            // System.out.println("파란 구슬만 들어갔으므로 종료");
             return;
         }
 
@@ -68,7 +76,9 @@ public class Q13460 {
             return;
         }
 
+        // 현재 좌표에서 상,하,좌,우로 기울임
         for (int i = 0; i <= 3; i++) {
+
             // 왔던 방향으로는 다시 기울이지 않음
             if (blockDir == i) {
                 continue;
