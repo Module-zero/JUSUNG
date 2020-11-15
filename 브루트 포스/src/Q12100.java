@@ -22,27 +22,29 @@ public class Q12100 {
             }
         }
 
-        go(0);
+        go(1);
         System.out.print(max);
     }
 
-    static void go(int depth) {
+    static void go(int nLean) {
 
-        if (depth == 5) {
+        // 최대 5번까지만 기울이도록함
+        if (nLean > 5) {
             return;
         }
 
         // 원본 board 배열을 저장
         int[][] sourceBoard = new int[N][N];
-        for (int j = 0; j < N; j++) {
-            for (int k = 0; k < N; k++) {
-                sourceBoard[j][k] = board[j][k];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                sourceBoard[i][j] = board[i][j];
             }
         }
 
         // i 는 이동하는 방향(상,하,좌,우)를 의미
         for (int i = 0; i <= 3; i++) {
-            // check 배열을 새로 생성
+            // "한번 합쳐진 블록은 또 합쳐질 수 없다" 는 규칙은 한번의 기울임에만 해당되므로
+            // 매번 기울일 때마다 check 배열 새로 생성해야함
             check = new boolean[N][N];
 
             // j는 한줄(열 or 행)을 의미
@@ -63,7 +65,8 @@ public class Q12100 {
                 }
             }
 
-            go(depth+1);
+            // 계속해서 기울이기
+            go(nLean+1);
 
             // 원본 board 배열을 복구
             for (int j = 0; j < N; j++) {
@@ -75,19 +78,14 @@ public class Q12100 {
     }
 
     static boolean update(int dir, int line) {
-
         boolean isChange = false;
-
         // 갱신 방향이 위쪽인 경우
         if (dir == 0) {
             for (int k = 0; k <= N-2; k++) {
                 if (board[k][line] == 0 && board[k+1][line] == 0) {
                     continue;
                 }
-                if (board[k+1][line] == 0) {
-                    continue;
-                }
-                if (board[k][line] == 0) {
+                if (board[k][line] == 0 && board[k+1][line] != 0) {
                     board[k][line] = board[k+1][line];
                     board[k+1][line] = 0;
                     isChange = true;
@@ -98,8 +96,8 @@ public class Q12100 {
                 }
                 if (board[k][line] == board[k+1][line]) {
                     board[k][line] += board[k+1][line];
-                    check[k][line] = true;
                     board[k+1][line] = 0;
+                    check[k][line] = true;
                     isChange = true;
                 }
             }
@@ -110,10 +108,7 @@ public class Q12100 {
                 if (board[k][line] == 0 && board[k-1][line] == 0) {
                     continue;
                 }
-                if (board[k-1][line] == 0) {
-                    continue;
-                }
-                if (board[k][line] == 0) {
+                if (board[k][line] == 0 && board[k-1][line] != 0) {
                     board[k][line] = board[k-1][line];
                     board[k-1][line] = 0;
                     isChange = true;
@@ -124,8 +119,8 @@ public class Q12100 {
                 }
                 if (board[k][line] == board[k-1][line]) {
                     board[k][line] += board[k-1][line];
-                    check[k][line] = true;
                     board[k-1][line] = 0;
+                    check[k][line] = true;
                     isChange = true;
                 }
             }
@@ -136,10 +131,7 @@ public class Q12100 {
                 if (board[line][k] == 0 && board[line][k+1] == 0) {
                    continue;
                 }
-                if (board[line][k+1] == 0) {
-                    continue;
-                }
-                if (board[line][k] == 0) {
+                if (board[line][k] == 0 && board[line][k+1] != 0) {
                     board[line][k] = board[line][k+1];
                     board[line][k+1] = 0;
                     isChange = true;
@@ -150,8 +142,8 @@ public class Q12100 {
                 }
                 if (board[line][k] == board[line][k+1]) {
                     board[line][k] += board[line][k+1];
-                    check[line][k] = true;
                     board[line][k+1] = 0;
+                    check[line][k] = true;
                     isChange = true;
                 }
             }
@@ -162,10 +154,7 @@ public class Q12100 {
                 if (board[line][k] == 0 && board[line][k-1] == 0) {
                     continue;
                 }
-                if (board[line][k-1] == 0) {
-                    continue;
-                }
-                if (board[line][k] == 0) {
+                if (board[line][k] == 0 && board[line][k-1] != 0 ) {
                     board[line][k] = board[line][k-1];
                     board[line][k-1] = 0;
                     isChange = true;
@@ -176,8 +165,8 @@ public class Q12100 {
                 }
                 if (board[line][k] == board[line][k-1]) {
                     board[line][k] += board[line][k-1];
-                    check[line][k] = true;
                     board[line][k-1] = 0;
+                    check[line][k] = true;
                     isChange = true;
                 }
             }
@@ -197,13 +186,5 @@ public class Q12100 {
             }
         }
         return max;
-    }
-
-    static void printBoard() {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                System.out.print(board[i][j] + " ");
-            } System.out.println();
-        } System.out.println();
     }
 }
