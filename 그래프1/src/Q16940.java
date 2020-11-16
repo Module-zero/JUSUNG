@@ -9,11 +9,13 @@ public class Q16940 {
     static GraphList graph;
     static int[] visited;
     static LinkedList<Integer> queue = new LinkedList<>();
+    static int[] a;
     static int[] b;
     static int[] order;
-    static ArrayList<Integer> res = new ArrayList<>();
+    static int index = 0;
 
     public static void main(String[] args) throws IOException {
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
         graph = new GraphList(N);
@@ -25,6 +27,7 @@ public class Q16940 {
             graph.put(n1, n2);
         }
 
+        a = new int[N];
         b = new int[N];
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         for (int i = 0; i < N; i++) {
@@ -38,14 +41,14 @@ public class Q16940 {
 
         // 주어진 방문순서에 맞게 인접리스트의 각 리스트의 순서를 정렬
         sort();
+        // 정렬된 인접리스트로 bfs 탐색
         bfs(1);
-        for (int i = 0; i < N; i++) {
-            if (res.get(i) != b[i]) {
-                System.out.print(0);
-                return;
-            }
+        if (Arrays.equals(a, b)) {
+            System.out.print(1);
         }
-        System.out.print(1);
+        else {
+            System.out.print(0);
+        }
     }
 
     static void bfs(int n) {
@@ -53,7 +56,7 @@ public class Q16940 {
         visited[n] = 1;
         while (!queue.isEmpty()) {
             int p = queue.poll();
-            res.add(p);
+            a[index++] = p;
             ArrayList<Integer> list = graph.getList().get(p);
             for (int i = 0; i < list.size(); i++) {
                 int np = list.get(i);
@@ -89,10 +92,6 @@ public class Q16940 {
             for (int i = 0; i < listSize + 1; i++) {
                 list.add(new ArrayList<Integer>());
             }
-        }
-
-        public void setList(ArrayList<ArrayList<Integer>> list) {
-            this.list = list;
         }
 
         public ArrayList<ArrayList<Integer>> getList() {
