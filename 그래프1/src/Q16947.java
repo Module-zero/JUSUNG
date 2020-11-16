@@ -79,13 +79,14 @@ public class Q16947 {
         return false;
     }
 
-
     static boolean findCycle(int start, int depth) {
         visited[start] = depth;
+        // 일단 방문한 역을 사이클 리스트에 넣음
         cycleList.add(start);
         ArrayList<Integer> list = graph.getList().get(start);
         for (int i = 0;  i < list.size(); i++) {
             int np = list.get(i);
+            // 다음역이 이전역이 아니면서 사이클의 시작역일 경우 사이클 찾음
             if (visited[start]-1 != visited[np] && np == cycleStart) {
                 return true;
             }
@@ -93,6 +94,7 @@ public class Q16947 {
                 if (findCycle(np, depth+1)) {
                     return true;
                 }
+                // 사이클을 찾지 못했으므로 사이클 리스트에서 제외
                 cycleList.remove(cycleList.size()-1);
                 visited[np] = 0;
             }
@@ -113,11 +115,11 @@ public class Q16947 {
                     visited[np] = visited[p] + 1;
                 }
                 else {
-                    // 사이클의 정점의 개수가 홀수
+                    // 순환역의 개수가 홀수
                     if (visited[np] == visited[p]) {
                         return np;
                     }
-                    // 사이클의 정점의 개수가 짝수
+                    // 순환역의 개수가 짝수
                     if(visited[np] == visited[p] + 1) {
                         return np;
                     }
