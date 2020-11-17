@@ -4,6 +4,22 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+// 1.
+// 서로 다른 섬 사이의 최소거리 구하기
+
+// 2.
+// 우선 섬들을 구분할 수 있어야함.
+// 각 섬의 모든 지점에서 다른 섬에 도달할때까지의 거리를 구할 수 있어야함
+// 이를 위해 map 에는 서로 다른 숫자로 섬들을 구분하였고, visited 에는 거리를 기록함
+// 내가 푼 것보다 땅따먹기 방식이 월등히 빠름
+
+// 3.
+// bfs 활용
+
+// 4.
+// 각 섬마다 bfs 를 번갈아가며 한번씩 진행하기위해
+// bfs 전에 큐에 모든 섬들의 좌표를 미리 집어넣는 방식을 사용함
+
 public class Q2146 {
 
     static int N;
