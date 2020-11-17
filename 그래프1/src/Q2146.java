@@ -31,6 +31,7 @@ public class Q2146 {
     static LinkedList<Pair> queue = new LinkedList<>();
     static int min = Integer.MAX_VALUE;
 
+
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
