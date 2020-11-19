@@ -84,7 +84,6 @@ public class Q9376 {
                 }
                 if (visited[nx][ny] == -1) {
                     if (map[nx][ny] != '*') {
-                        // queue.add(new Pair(nx, ny));
                         if (map[nx][ny] == '#') {
                             queue.addLast(new Pair(nx, ny));
                             visited[nx][ny] = visited[p.getX()][p.getY()] + 1;
