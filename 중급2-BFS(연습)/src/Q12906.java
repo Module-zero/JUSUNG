@@ -6,7 +6,7 @@ import java.util.*;
 public class Q12906 {
 
     static Stack<Character>[] start = new Stack[3];
-    static Map<Stack<Character>[], Integer> map = new HashMap<>();
+    static Map<String, Integer> map = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
 
@@ -40,13 +40,24 @@ public class Q12906 {
         return res;
     }
 
+    static String setStatus(Stack<Character>[] stacks) {
+        String s = "";
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < stacks[i].size(); j++) {
+                s += stacks[i].get(j);
+            }
+            s += "/";
+        }
+        return s;
+    }
+
     static void bfs() {
         LinkedList<Stack<Character>[]> q = new LinkedList<>();
-        map.put(start, 0);
+        map.put(setStatus(start), 0);
         q.add(start);
         while (!q.isEmpty()) {
             Stack<Character>[] s = q.poll();
-            int count = map.get(s);
+            int count = map.get(setStatus(s));
             if (check(s)) {
                 System.out.print(count);
                 break;
@@ -68,16 +79,16 @@ public class Q12906 {
 
                     if (s1[i] != null) {
                         s1[idx1].push(s1[i].pop());
-                        if (map.get(s1) == null) {
-                            map.put(s1, count + 1);
+                        if (map.get(setStatus(s1)) == null) {
+                            map.put(setStatus(s1), count + 1);
                             q.add(s1);
                         }
                     }
 
                     if (s2[i] != null) {
                         s2[idx2].push(s2[i].pop());
-                        if (map.get(s2) == null) {
-                            map.put(s2, count + 1);
+                        if (map.get(setStatus(s2)) == null) {
+                            map.put(setStatus(s2), count + 1);
                             q.add(s2);
                         }
                     }
