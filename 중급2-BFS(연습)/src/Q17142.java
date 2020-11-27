@@ -58,7 +58,6 @@ public class Q17142 {
             while (!q.isEmpty()) {
 
                 Pair p = q.poll();
-
                 if (map[p.getX()][p.getY()] == 0 || visited[p.getX()][p.getY()] == 1) {
                     if (max < visited[p.getX()][p.getY()]) {
                         max = visited[p.getX()][p.getY()];
@@ -97,10 +96,10 @@ public class Q17142 {
     static boolean isFull(int[][] visited) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (map[i][j] == 0 && visited[i][j] == 0) {
-                    return false;
-                } else if (map[i][j] == 2 && visited[i][j] == 0) {
-                    return false;
+                if (visited[i][j] == 0) {
+                   if (map[i][j] == 0 || map[i][j] == 2) {
+                      return false;
+                   }
                 }
             }
         }
