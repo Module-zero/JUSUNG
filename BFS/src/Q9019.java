@@ -4,6 +4,9 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+// 일반큐 vs 우선순위 큐, 덱
+// 가중치가 매번 동일하게 증가하는 경우에는 일반큐
+// 가중치가 조건에 따라 다르게 증가할 수 있는 경우에는 우선순위 큐, 덱
 public class Q9019 {
     static int t, a, b;
     static LinkedList<Node> q;
