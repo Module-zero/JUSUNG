@@ -31,14 +31,23 @@ public class Q16954 {
         q.add(new Pair(7, 0, 0));
         while (!q.isEmpty()) {
             Pair p = q.poll();
-            // System.out.println(p);
+
+            // 오른쪽 위칸에 도달함
             if (p.getX() == 0 && p.getY() == 7) {
                 flag = true;
                 break;
             }
 
-            // 벽과 겹치면 인접좌표삽입 X
-            if (map[p.getX()][p.getY()] != 1) {
+            // 벽을 만나면 좌표 삭제
+            if (map[p.getX()][p.getY()] == 1) {
+                // 맵은 계속 이동하기 때문에 벽에 의해 삭제된 좌표를 다른 좌표가 다시 방문해야 할 수도 있음
+                // 따라서 그런 경우에는 방문 여부를 false 로 바꾸어야함
+                visited[p.getX()][p.getY()] = false;
+            } else {
+                // 현재 위치에 서있는 경우
+                q.add(new Pair(p.getX(), p.getY(), p.getDepth() + 1));
+
+                // 인접좌표들을 큐에 삽입
                 for (int i = 0; i < 8; i++) {
                     int nx = p.getX() + dx[i];
                     int ny = p.getY() + dy[i];
@@ -56,17 +65,8 @@ public class Q16954 {
                 if (p.getDepth() != q.peek().getDepth()) {
                     down();
                     updateMap();
-                    /*
-                    for (int i = 0; i < 8; i++) {
-                        for (int j = 0; j < 8; j++) {
-                            System.out.print(map[i][j]);
-                        }
-                        System.out.println();
-                    }
-                     */
                 }
             }
-
         }
 
         if (flag) {
