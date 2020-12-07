@@ -9,10 +9,10 @@ public class Q2138 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
-        boolean[] state = new boolean[n];
 
         String s1 = br.readLine();
         String s2 = br.readLine();
+        boolean[] state = new boolean[n];
         for (int i = 0; i < n; i++) {
             state[i] = s1.charAt(i) != s2.charAt(i);
         }
@@ -48,9 +48,9 @@ public class Q2138 {
         }
     }
 
-    static void change(boolean[] state, int i) {
-        state[i] = !state[i];
-        if (i > 0) { state[i-1] = !state[i-1]; }
-        if (i < n-1) { state[i+1] = !state[i+1]; }
+    static void change(boolean[] arr, int i) {
+        arr[i] = !arr[i];
+        if (i > 0) { arr[i-1] = !arr[i-1]; }
+        if (i < n-1) { arr[i+1] = !arr[i+1]; }
     }
 }
