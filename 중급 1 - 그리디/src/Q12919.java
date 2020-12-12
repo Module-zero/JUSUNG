@@ -38,8 +38,7 @@ public class Q12919 {
 
         if (src.charAt(0) == 'B') {
             copy = new StringBuilder(src);
-            copy.deleteCharAt(0);
-            copy.reverse();
+            copy.deleteCharAt(0).reverse();
             res2 = go(copy.toString());
         }
 
