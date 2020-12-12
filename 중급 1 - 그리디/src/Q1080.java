@@ -8,6 +8,7 @@ public class Q1080 {
     static int[][] arr1, arr2;
     static boolean[][] check;
 
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
