@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Q10815 {
+public class Q10816 {
     static int n, m;
     static int[] arr1, arr2;
 
