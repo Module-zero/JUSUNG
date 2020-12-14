@@ -7,7 +7,7 @@ public class Q10816 {
     static int n, m;
     static int[] arr1, arr2;
     // 숫자의 범위가 어느정도 제한적인 때는 배열을 잡고 체크해서 풀 수 있지만
-    // 그렇지 않을 경우에는 low bound, upper bound 를 사용해야함
+    // 그렇지 않을 경우에는 lower bound, upper bound 를 사용해야함
     // static int[] positive = new int[10000001]; // 0 ~ 10000000
     // static int[] negative = new int[10000001]; // -1 ~ -10000000
     static StringBuilder sb = new StringBuilder();
