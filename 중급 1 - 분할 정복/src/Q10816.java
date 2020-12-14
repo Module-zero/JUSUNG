@@ -1,8 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Q10816 {
     static int n, m;
@@ -102,6 +101,7 @@ public class Q10816 {
                     sb.append(negative[Math.abs(x)]).append(" ");
                 }
                 return;
+                sb.append(map.get(x)).append(" ");
             } else if (arr1[mid] < x) {
                 start = mid + 1;
             } else {
