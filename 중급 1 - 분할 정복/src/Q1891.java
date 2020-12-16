@@ -36,15 +36,14 @@ public class Q1891 {
    }
 
    static String foo(long size, long sx, long sy) {
-        // System.out.println(size+","+sx+","+sy);
         if (size == 1) {
             return "";
         }
-        if (startX >= sx && startX < sx+size/2 && startY >= sy+size/2 && startY < sy+size) {
+        if (startX < sx+size/2 && startY >= sy+size/2) {
             return "1" + foo(size/2, sx, sy+size/2);
-        } else if (startX >= sx && startX < sx+size/2 && startY >= sy && startY < sy+size/2) {
+        } else if (startX < sx+size/2 && startY < sy+size/2) {
             return "2" + foo(size/2, sx, sy);
-        } else if (startX >= sx+size/2 && startX < sx+size && startY >= sy && startY < sy+size/2) {
+        } else if (startX >= sx+size/2 && startY < sy+size/2) {
             return "3" + foo(size/2, sx+size/2, sy);
         } else {
             return "4" + foo(size/2, sx+size/2, sy+size/2);
