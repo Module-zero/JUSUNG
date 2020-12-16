@@ -25,40 +25,20 @@ public class Q2263 {
             postOrder[i] = Integer.parseInt(st.nextToken());
         }
 
-        int root = order[postOrder[postOrder.length-1]];
-        printPreOrder(0, postOrder.length-1, root);
+        printPreOrder(0, postOrder.length-1, 0);
         System.out.print(sb);
     }
 
-    static void printPreOrder(int start, int end, int root) {
-        sb.append(inOrder[root]).append(" ");
-
-        if (start == end) {
+    static void printPreOrder(int start, int end, int prog) {
+        int size = end-start+1;
+        if (size == 0) {
             return;
         }
 
-        if (root > 0) {
-            printPreOrder(start, root - 1, order[start + root - 1]);
-        }
-        if (root < n-1) {
-            printPreOrder(root + 1, end, order[end]);
-        }
+        int rootIndex = order[postOrder[prog+size-1]];
+        sb.append(inOrder[rootIndex]).append(" ");
+
+        printPreOrder(start, rootIndex-1, prog);
+        printPreOrder(rootIndex+1, end, prog+rootIndex-start);
     }
-
-    // inOrder 배열에서 start 부터 end 까지 탐색하여
-    // root 의 인덱스를 리턴
-    /*
-    static int findRoot(int start, int end) {
-
-        int max = -1, root = -1;
-        for (int i = start; i <= end; i++) {
-            if (max < order[inOrder[i]]) {
-                max = order[inOrder[i]];
-                root = i;
-            }
-        }
-        return root;
-    }
-         */
-
 }
