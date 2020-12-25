@@ -42,10 +42,9 @@ public class Q2343 {
         for (int i = 0; i < n; i++) {
             if (sum + lessons[i] > s) {
                 cnt++;
-                sum = lessons[i];
-            } else {
-                sum += lessons[i];
+                sum = 0;
             }
+            sum += lessons[i];
         }
         if (sum <= s) {
             cnt++;
