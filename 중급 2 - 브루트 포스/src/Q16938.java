@@ -54,10 +54,8 @@ public class Q16938 {
 
         // index 번 문제를 선택하는 경우
         int cnt1 = go(index+1, cnt+1, sum+arr[index], Math.max(max, arr[index]), Math.min(min, arr[index]));
-
         // index 번 문제를 선택하지 않는 경우
         int cnt2 = go(index+1, cnt, sum, max, min);
-
         return cnt1 + cnt2;
     }
 

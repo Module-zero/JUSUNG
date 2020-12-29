@@ -1,5 +1,3 @@
-import org.omg.PortableInterceptor.INACTIVE;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,37 +5,46 @@ import java.io.InputStreamReader;
 public class Q16637 {
     static int n;
     static String exp;
+    static int max = Integer.MIN_VALUE;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
         exp = br.readLine();
 
-        go(0, 0, 0, '+');
+        go(0, 0);
+        System.out.print(max);
     }
 
-    // n = 9
-    // 3+8*7-9*2
+    static void go(int index, int sum) {
 
-    static int max = Integer.MIN_VALUE;
-
-    static void go(int index, int sum, int start, char op) {
-        if (index == n) {
+        if (index >= n) {
+            max = Math.max(max, sum);
+            return;
         }
 
-        char opp = exp.charAt(start+1);
-        int left = Integer.parseInt(String.valueOf(exp.charAt(start)));
-        int right = Integer.parseInt(String.valueOf(exp.charAt(start+2)));
-        int res = cal(opp, left, right);
-
-        // 괄호를 추가하는 경우
-        go(index+1, cal(op, res, sum), start+4, exp.charAt(start+3));
-
+        int cur_val = exp.charAt(index)-'0';
+        char cur_op = index == 0 ? '+' : exp.charAt(index-1);
         // 괄호를 추가하지 않는 경우
-        go(index+1, left, start+2, exp.charAt(start+1));
+        go(index+2, cal(cur_op, sum, cur_val));
+
+        if (index <= n-2) {
+            int next_val = exp.charAt(index + 2) - '0';
+            char next_op = exp.charAt(index + 1);
+            // 괄호를 추가하는 경우
+            go(index + 4, cal(cur_op, sum, cal(next_op, cur_val, next_val)));
+        }
     }
 
     static int cal(char op, int left, int right) {
-        return 0;
+        switch (op) {
+            case '+' :
+                return (left+right);
+            case '-' :
+                return (left-right);
+            case '*' :
+                return (left*right);
+        }
+        return -1;
     }
 }
