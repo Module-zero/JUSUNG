@@ -36,11 +36,7 @@ public class Q15683 {
     static void go(int index, int[][] arr) {
 
         if (index == cctvs.size()) {
-            // System.out.println("index:"+index);
-            // printArray(arr);
-            int cnt = getBlind(arr);
-            min = Math.min(min, cnt);
-            // System.out.println("min:"+min);
+            min = Math.min(min, getBlind(arr));
             return;
         }
 
@@ -52,127 +48,42 @@ public class Q15683 {
         int x = p.getX(), y = p.getY();
         int num = map[x][y];
 
-        // System.out.println("index:"+index);
-        // System.out.println("num:"+num);
-        // printArray(arr);
-
         switch (num) {
             case 1:
                 for (int i = 0; i < 4; i++) {
-                    int nx = x+dx[i];
-                    int ny = y+dy[i];
-                    setEyes(nx, ny, i, arr);
-                    /*
-                    while (nx >= 0 && ny >= 0 && nx < n && ny < m && map[nx][ny] != 6) {
-                        arr[nx][ny] = -1;
-                        nx += dx[i];
-                        ny += dy[i];
-                    }
-                     */
+                    setEyes(x+dx[i], y+dy[i], i, arr);
                     go(index+1, arr);
                     arrayCopy(src, arr);
                 }
                 break;
             case 2 :
                 for (int i = 0; i < 2; i++) {
-                    int nx = x+dx[i];
-                    int ny = y+dy[i];
-                    setEyes(nx, ny, i, arr);
-                    /*
-                    while (nx >= 0 && ny >= 0 && nx < n && ny < m && map[nx][ny] != 6) {
-                        arr[nx][ny] = -1;
-                        nx += dx[i];
-                        ny += dy[i];
-                    }
-                     */
-                    nx = x+dx[i+2];
-                    ny = y+dy[i+2];
-                    setEyes(nx, ny, i+2, arr);
-                    /*
-                    while (nx >= 0 && ny >= 0 && nx < n && ny < m && map[nx][ny] != 6) {
-                        arr[nx][ny] = -1;
-                        nx += dx[i + 2];
-                        ny += dy[i + 2];
-                    }
-                     */
+                    setEyes(x+dx[i], y+dy[i], i, arr);
+                    setEyes(x+dx[i+2], y+dy[i+2], i+2, arr);
                     go(index+1, arr);
                     arrayCopy(src, arr);
                 }
                 break;
             case 3:
                 for (int i = 0; i < 4; i++) {
-                    int nx = x+dx[i];
-                    int ny = y+dy[i];
-                    setEyes(nx, ny, i, arr);
-                    /*
-                    while (nx >= 0 && ny >= 0 && nx < n && ny < m && map[nx][ny] != 6) {
-                        arr[nx][ny] = -1;
-                        nx += dx[i];
-                        ny += dy[i];
-                    }
-                     */
-                    nx = x+dx[(i+1)%4];
-                    ny = y+dy[(i+1)%4];
-                    setEyes(nx, ny, (i+1)%4, arr);
-                    /*
-                    while (nx >= 0 && ny >= 0 && nx < n && ny < m && map[nx][ny] != 6) {
-                        arr[nx][ny] = -1;
-                        nx += dx[(i+1)%4];
-                        ny += dy[(i+1)%4];
-                    }
-                     */
+                    setEyes(x+dx[i], y+dy[i], i, arr);
+                    setEyes(x+dx[(i+1)%4], y+dy[(i+1)%4], (i+1)%4, arr);
                     go(index+1, arr);
                     arrayCopy(src, arr);
                 }
                 break;
             case 4:
                 for (int i = 0; i < 4; i++) {
-                    int nx = x+dx[i];
-                    int ny = y+dy[i];
-                    setEyes(nx, ny, i, arr);
-                    /*
-                    while (nx >= 0 && ny >= 0 && nx < n && ny < m && map[nx][ny] != 6) {
-                        arr[nx][ny] = -1;
-                        nx += dx[i];
-                        ny += dy[i];
-                    }
-                     */
-                    nx = x+dx[(i+1)%4];
-                    ny = y+dy[(i+1)%4];
-                    setEyes(nx, ny, (i+1)%4, arr);
-                    /*
-                    while (nx >= 0 && ny >= 0 && nx < n && ny < m && map[nx][ny] != 6) {
-                        arr[nx][ny] = -1;
-                        nx += dx[(i+1)%4];
-                        ny += dy[(i+1)%4];
-                    }
-                     */
-                    nx = x+dx[(i+2)%4];
-                    ny = y+dy[(i+2)%4];
-                    setEyes(nx, ny, (i+2)%4, arr);
-                    /*
-                    while (nx >= 0 && ny >= 0 && nx < n && ny < m && map[nx][ny] != 6) {
-                        arr[nx][ny] = -1;
-                        nx += dx[(i+2)%4];
-                        ny += dy[(i+2)%4];
-                    }
-                     */
+                    setEyes(x+dx[i], y+dy[i], i, arr);
+                    setEyes(x+dx[(i+1)%4], y+dy[(i+1)%4], (i+1)%4, arr);
+                    setEyes(x+dx[(i+2)%4], y+dy[(i+2)%4], (i+2)%4, arr);
                     go(index+1, arr);
                     arrayCopy(src, arr);
                 }
                 break;
             case 5:
                 for (int i = 0; i < 4; i++) {
-                    int nx = x+dx[i];
-                    int ny = y+dy[i];
-                    setEyes(nx, ny, i, arr);
-                    /*
-                    while (nx >= 0 && ny >= 0 && nx < n && ny < m && map[nx][ny] != 6) {
-                        arr[nx][ny] = -1;
-                        nx += dx[i];
-                        ny += dy[i];
-                    }
-                     */
+                    setEyes(x+dx[i], y+dy[i], i, arr);
                 }
                 go(index+1, arr);
                 break;
@@ -203,14 +114,6 @@ public class Q15683 {
         for (int i = 0; i < n; i++) {
             if (m >= 0) System.arraycopy(src[i], 0, dst[i], 0, m);
         }
-    }
-
-    static void printArray(int[][] arr) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                System.out.print(arr[i][j]+" ");
-            } System.out.println();
-        } System.out.println();
     }
 
     static class Pair {
