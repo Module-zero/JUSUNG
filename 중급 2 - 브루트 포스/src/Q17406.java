@@ -9,6 +9,8 @@ public class Q17406 {
     static int[][] arr;
     static ArrayList<int[]> rotation = new ArrayList<>();
     static int answer = Integer.MAX_VALUE;
+    static int[] order = new int[6];
+    static boolean[] visited = new boolean[6];
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -26,9 +28,9 @@ public class Q17406 {
         for (int i = 0; i < k; i++) {
             st = new StringTokenizer(br.readLine(), " ");
             int[] tmp = new int[3];
-            tmp[0] = Integer.parseInt(st.nextToken());
-            tmp[1] = Integer.parseInt(st.nextToken());
-            tmp[2] = Integer.parseInt(st.nextToken());
+            for (int j = 0; j < 3; j++) {
+               tmp[j] = Integer.parseInt(st.nextToken());
+            }
             rotation.add(tmp);
         }
 
@@ -36,8 +38,6 @@ public class Q17406 {
         System.out.print(answer);
     }
 
-    static int[] order = new int[6];
-    static boolean[] visited = new boolean[6];
     static void go(int index) {
 
         if (index == rotation.size()) {
@@ -61,55 +61,44 @@ public class Q17406 {
         }
     }
 
-    int[] dx = {0, 1, 0, -1};
-    int[] dy = {1, 0, -1, 0};
-    static int[][] rotate(int[][] arr, int[] rotation) {
+    static int[][] rotate(int[][] src, int[] rotation) {
         int r = rotation[0];
         int c = rotation[1];
         int s = rotation[2];
         int sx = r-s, sy = c-s;
         int ex = r+s, ey = c+s;
 
-        // System.out.println("s: "+sx+","+sy);
-        // System.out.println("e: "+ex+","+ey);
+        int[][] dst = new int[n+1][m+1];
+        arrayCopy(src, dst);
 
-        int[][] tmp = new int[n+1][m+1];
-        arrayCopy(arr, tmp);
-        func(arr, tmp, sx, sy, ex, ey);
-
-        /*
-        System.out.println("변환전 -> ");
-        printArr(arr);
-        System.out.println("변환후 -> ");
-        printArr(tmp);
-         */
-
-        return tmp;
+        // 로테이션 수행
+        func(src, dst, sx, sy, ex, ey);
+        return dst;
     }
 
-    static void func(int[][] arr, int[][] dst, int sx, int sy, int ex, int ey) {
+    static void func(int[][] src, int[][] dst, int sx, int sy, int ex, int ey) {
 
         if ((sx == ex && sy == ey) || (sx > ex && sy > ey)) {
             return;
         }
 
         for (int i = sy; i <= ey-1; i++) {
-            dst[sx][i+1] = arr[sx][i];
+            dst[sx][i+1] = src[sx][i];
         }
 
         for (int i = sx; i <= ex-1; i++) {
-            dst[i+1][ey] = arr[i][ey];
+            dst[i+1][ey] = src[i][ey];
         }
 
         for (int i = sy+1; i <= ey; i++) {
-            dst[ex][i-1] = arr[ex][i];
+            dst[ex][i-1] = src[ex][i];
         }
 
         for (int i = sx+1; i <= ex; i++) {
-            dst[i-1][sy] = arr[i][sy];
+            dst[i-1][sy] = src[i][sy];
         }
 
-        func(arr, dst, sx+1, sy+1, ex-1, ey-1);
+        func(src, dst, sx+1, sy+1, ex-1, ey-1);
     }
 
     static int getVal(int[][] arr) {
@@ -128,13 +117,5 @@ public class Q17406 {
         for (int i = 1; i <= n; i++) {
             if (m >= 0) System.arraycopy(src[i], 1, dst[i], 1, m);
         }
-    }
-
-    static void printArr(int[][] arr) {
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= m; j++) {
-                System.out.print(arr[i][j]+ " ");
-            } System.out.println();
-        } System.out.println();
     }
 }
