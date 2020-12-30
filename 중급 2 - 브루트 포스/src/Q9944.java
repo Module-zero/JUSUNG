@@ -49,16 +49,18 @@ public class Q9944 {
 
         visited[x][y] = true;
 
+        // 모든 빈 칸을 방문하였는가?
         if (isFull()) {
             min = Math.min(min, index);
             return;
         }
 
+        // x, y 에서 4방향으로 공을 굴림
         for (int i = 0; i < 4; i++) {
             int nx = x + dx[i];
             int ny = y + dy[i];
 
-            // 탐색 처리
+            // 공을 해당 방향 끝까지 굴림
             while (nx >= 0 && ny >= 0 && nx < n && ny < m && !visited[nx][ny] && map[nx][ny] != '*') {
                 visited[nx][ny] = true;
                 nx += dx[i];
@@ -67,19 +69,21 @@ public class Q9944 {
             nx -= dx[i];
             ny -= dy[i];
 
+            // 해당 방향으로는 이동할 수 없음
             if (x == nx && y == ny) {
                 continue;
             }
 
             dfs(index+1, nx, ny);
 
-            // 원상 복구
+            // 탐색 처리 원상 복구
             while (nx != x || ny != y) {
                 visited[nx][ny] = false;
                 nx -= dx[i];
                 ny -= dy[i];
             }
         }
+
         visited[x][y] = false;
     }
 
