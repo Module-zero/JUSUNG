@@ -6,6 +6,72 @@ import java.util.*;
 public class Q15686 {
     static int n, m;
     static int[][] map = new int[50][50];
+    static ArrayList<Pair> house = new ArrayList<Pair>();
+    static ArrayList<Pair> chicken = new ArrayList<Pair>();
+    static boolean[] visited = new boolean[13];
+    static int answer = Integer.MAX_VALUE;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine(), " ");
+            for (int j = 0; j < n; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+                if (map[i][j] == 2) {
+                    chicken.add(new Pair(i, j));
+                } else if (map[i][j] == 1) {
+                    house.add(new Pair(i, j));
+                }
+            }
+        }
+
+        go(0, 0);
+        System.out.print(answer);
+    }
+
+    static void go(int index, int cnt) {
+
+        if (cnt == m) {
+            // 남겨진 치킨집들은 check 배열에 체크되어있음
+            int sum = 0;
+            for (Pair h : house) {
+                int min = Integer.MAX_VALUE;
+                for (int i = 0; i < 13; i++) {
+                    if (visited[i]) {
+                        int dist = getDist(h, chicken.get(i));
+                        min = Math.min(min, dist);
+                    }
+                }
+                sum += min;
+            }
+            answer = Math.min(sum, answer);
+            return;
+        }
+
+        // 남은 치킨집이 m 개 미만일 경우
+        if (index == chicken.size()) {
+            return;
+        }
+
+        // index 의 치킨집은 남겨둠
+        visited[index] = true;
+        go(index+1, cnt+1);
+
+        // index 의 치킨집 삭제
+        visited[index] = false;
+        go(index+1, cnt);
+    }
+
+    static int getDist(Pair p1, Pair p2) {
+        return Math.abs(p1.getX()-p2.getX()) + Math.abs(p1.getY()-p2.getY());
+    }
+
+    /*
+    static int n, m;
+    static int[][] map = new int[50][50];
     static ArrayList<Pair> chicken = new ArrayList<Pair>();
     static boolean[] check = new boolean[13];
     static int[] order;
@@ -84,6 +150,7 @@ public class Q15686 {
         }
         return dist;
     }
+     */
 
     static void arrayCopy(int[][] src, int[][] dst) {
         for (int i = 0; i < n; i++) {
