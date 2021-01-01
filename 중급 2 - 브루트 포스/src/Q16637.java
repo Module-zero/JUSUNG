@@ -25,6 +25,7 @@ public class Q16637 {
 
         int cur_val = exp.charAt(index)-'0';
         char cur_op = index == 0 ? '+' : exp.charAt(index-1);
+
         // 괄호를 추가하지 않는 경우
         go(index+2, cal(cur_op, sum, cur_val));
 
