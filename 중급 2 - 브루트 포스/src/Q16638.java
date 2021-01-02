@@ -27,6 +27,7 @@ public class Q16638 {
 
         s += op;
         String next_op = index+1 < n ? String.valueOf(exp[index+1]) : "";
+
         // 괄호를 추가하지 않음
         go(index+2, next_op, s+exp[index]);
 
@@ -38,6 +39,7 @@ public class Q16638 {
             }
             sb.append(")");
             next_op = (index >= n-3) ? "" : String.valueOf(exp[index+3]);
+
             // 괄호를 추가함
             go(index+4, next_op, s+sb);
         }
