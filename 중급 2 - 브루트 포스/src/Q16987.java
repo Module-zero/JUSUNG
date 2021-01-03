@@ -55,6 +55,7 @@ public class Q16987 {
             }
         }
 
+        // 깰 계란이 없음
         if (!ok) {
             go(index+1);
         }
