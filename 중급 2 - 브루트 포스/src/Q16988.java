@@ -7,16 +7,16 @@ public class Q16988 {
     static int n, m;
     static int[][] arr = new int[20][20];
     static int[][] group = new int[20][20];
-    static int[] groupCount;
+    static int[] groupCount = new int[20*20];
     static Set<Pair> candidate1 = new HashSet<>();
     static ArrayList<Pair> candidate2 = new ArrayList<>();
+    static ArrayList<HashSet<Pair>> deadList = new ArrayList<>();
     static boolean[] visited = new boolean[20*20];
     static int[] order = new int[2];
     static int max = Integer.MIN_VALUE;
     static int[] dx = {0, -1, 0, 1};
     static int[] dy = {-1, 0, 1, 0};
 
-    static ArrayList<HashSet<Pair>> deadList = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -41,7 +41,6 @@ public class Q16988 {
         }
 
         // 각 그룹의 돌의 개수를 저장한다.
-        groupCount = new int[groupNum];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (group[i][j] != 0) {
@@ -50,6 +49,7 @@ public class Q16988 {
             }
         }
 
+        // 그룹이 없으면 0을 출력.
         if (groupNum == 1) {
             System.out.print(0);
             return;
@@ -61,7 +61,7 @@ public class Q16988 {
         }
 
         // 2번돌과 인접해있는 모든 빈칸을 후보리스트에 넣는다.
-        // 이 때, 각 그룹을 죽이기위해 필요한 빈칸들을 구분해서 저장해둔다.
+        // 이 때, 각 그룹을 죽이기위해 필요한 빈칸들을 구분해서 deadList 에 저장해둔다.
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (arr[i][j] == 2) {
@@ -70,7 +70,7 @@ public class Q16988 {
             }
         }
 
-        // 2개의 돌을 뽑기위해 ArrayList 에 옮겨담는다.
+        // 서로 다른 2개의 돌을 뽑기위해 ArrayList 에 옮겨담는다.
         candidate2.addAll(candidate1);
         go(0, 0);
         System.out.print(max);
