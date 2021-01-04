@@ -5,8 +5,8 @@ import java.util.StringTokenizer;
 
 public class Q16945 {
     static int[] arr = new int[9];
-    static boolean[] visited = new boolean[11];
     static int[] order = new int[9];
+    static boolean[] visited = new boolean[11];
     static int min = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws IOException {
@@ -48,22 +48,29 @@ public class Q16945 {
     }
 
     static boolean isMagicSquare(int[] order) {
-        int commonSum = order[0]+order[1]+order[2];
-        int rowSum2 = order[3]+order[4]+order[5];
-        int rowSum3 = order[6]+order[7]+order[8];
-        if (rowSum2 == commonSum && rowSum3 == commonSum) {
-            int colSum1 = order[0]+order[3]+order[6];
-            int colSum2 = order[1]+order[4]+order[7];
-            int colSum3 = order[2]+order[5]+order[8];
-            if (colSum1 == commonSum && colSum2 == commonSum && colSum3 == commonSum) {
-                int digSum1 = order[0]+order[4]+order[8];
-                int digSum2 = order[2]+order[4]+order[6];
-                return digSum1 == commonSum && digSum2 == commonSum;
-            } else {
+        int[] rowSum = new int[3];
+        int[] colSum = new int[3];
+        int[] digSum = new int[2];
+        for (int i = 0; i < 9; i++) {
+            rowSum[i/3] += order[i];
+            colSum[i%3] += order[i];
+        }
+        for (int i = 0; i < 3; i++) {
+            digSum[0] += order[i*3 + i];
+            digSum[1] += order[i*3 + 2-i];
+        }
+
+        int prevSum = rowSum[0];
+        for (int i = 0; i < 3; i++) {
+            if (rowSum[i] != prevSum || colSum[i] != prevSum) {
                 return false;
             }
-        } else {
-            return false;
+            if (i != 2) {
+                if (digSum[i] != prevSum) {
+                    return false;
+                }
+            }
         }
+        return true;
     }
 }
