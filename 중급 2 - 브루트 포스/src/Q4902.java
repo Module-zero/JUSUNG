@@ -12,7 +12,6 @@ public class Q4902 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         int cnt = 1;
         while (true) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -21,15 +20,16 @@ public class Q4902 {
                 break;
             }
 
-            arr = new int[500][1000];
-            dp = new int[500][1000];
+            arr = new int[401][801];
+            dp = new int[401][801];
             max = Integer.MIN_VALUE;
 
-            for (int i = 0; i < 500; i++) {
-                for (int j = 0; j < 1000; j++) {
+            for (int i = 0; i < 401; i++) {
+                for (int j = 0; j < 801; j++) {
                     arr[i][j] = 9999;
                 }
             }
+
             for (int i = 1; i <= n; i++) {
                 for (int j = 1; j <= 2*i-1; j++) {
                     arr[i][j] = Integer.parseInt(st.nextToken());
@@ -37,58 +37,39 @@ public class Q4902 {
                 }
             }
 
-            // k : 삼각형의 길이
-            for (int k = 1; k <= n; k++) {
-                for (int i = 1; i <= n-k+1; i++) {
-                    for (int j = 1; j <= 2*i -1; j+=2) {
-                        // 정삼각형의 형태만 더한다.
-                        plus(i, j, k);
-                    }
-                }
+            for (int i = 1; i <= n; i++) {
+               for (int j = 1; j <= 2*i-1; j++) {
+                   go(i, j, j, 0);
+               }
             }
-
-            for (int k = 1; k <= n; k++) {
-                for (int i = 2; i <= n; i++) {
-                    for (int j = 2; j <= 2*(i-1); j+=2) {
-                        // 역삼각형의 형태만 더한다.
-                        plusReverse(i, j, k);
-                    }
-                }
-            }
-
             sb.append(cnt++).append(". ").append(max).append("\n");
         }
-
         System.out.print(sb);
     }
 
-    static void plus(int x, int y, int k) {
-        int sum = 0;
-        for (int i = 0; i <= k-1; i++) {
-            int end = 2*i+y;
-            sum += dp[i+x][end] - dp[i+x][y-1];
+    static void go(int col, int left, int right, int sum) {
+
+        if (col > n || col < 1) {
+            return;
         }
+
+        if (left < 1 || arr[col][right] == 9999) {
+            return;
+        }
+
+        sum += dp[col][right] - dp[col][left-1];
         max = Math.max(max, sum);
+
+        if (left % 2 != 0) {
+            // 정삼각형
+            go(col+1, left, right+2, sum);
+        } else {
+            /// 역삼각형
+            go(col-1, left-2, right, sum);
+        }
     }
 
-    static void plusReverse(int x, int y, int k) {
-        int sum = 0;
-        for (int i = 0; i >= 1-k; i--) {
-            int start = 2*i+y;
-            if (i+x < 0) {
-               return;
-            }
-            if (start-1 < 0) {
-                return;
-            }
-            if (arr[i+x][y] == 9999) {
-                return;
-            }
-            sum += dp[i+x][y] - dp[i+x][start-1];
-        }
-        max = Math.max(max, sum);
-    }
-
+    /*
     static void printArr(int[][] arr) {
         for (int i = 1; i < n+1; i++) {
             for (int j = 1; j < 2*n; j++) {
@@ -96,4 +77,5 @@ public class Q4902 {
             } System.out.println();
         } System.out.println();
     }
+     */
 }
