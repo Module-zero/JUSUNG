@@ -33,12 +33,18 @@ public class Q4902 {
             for (int i = 1; i <= n; i++) {
                 for (int j = 1; j <= 2*i-1; j++) {
                     arr[i][j] = Integer.parseInt(st.nextToken());
+
+                    // dp[i][j] : arr[i][0] + ... + arr[i][j];
+                    // 삼각형의 값 계산을 빠르게 하기위해 dp 를 활용
                     dp[i][j] = dp[i][j-1] + arr[i][j];
                 }
             }
 
+            // 삼각형 하나하나를 좌표로 생각한다.
             for (int i = 1; i <= n; i++) {
                for (int j = 1; j <= 2*i-1; j++) {
+                   // 삼각형 (i, j) 를 가장 위 꼭지점으로 하는 모든 삼각형들의 각각의 값을 재귀로 구한다.
+                   // 이 때, j 가 홀수이면 정삼각형을, 짝수이면 역삼각형을 만들 수 있다.
                    go(i, j, j, 0);
                }
             }
@@ -68,14 +74,4 @@ public class Q4902 {
             go(col-1, left-2, right, sum);
         }
     }
-
-    /*
-    static void printArr(int[][] arr) {
-        for (int i = 1; i < n+1; i++) {
-            for (int j = 1; j < 2*n; j++) {
-                System.out.print(arr[i][j]+" ");
-            } System.out.println();
-        } System.out.println();
-    }
-     */
 }
