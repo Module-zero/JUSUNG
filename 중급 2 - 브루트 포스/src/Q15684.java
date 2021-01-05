@@ -42,14 +42,13 @@ public class Q15684 {
         // 사다리를 i 개 추가하는 경우
         for (int i = 1; i <= 3; i++) {
             visited = new boolean[9*30+1];
-
             if (go(0, 0, i)) {
                 System.out.print(i);
                 return;
             }
         }
 
-        // 답이 나오지 않는 경우
+        // 답이 나오지 않는 경우 혹은 답이 3 을 넘는 경우
         System.out.print(-1);
     }
 
@@ -63,6 +62,8 @@ public class Q15684 {
             if (!visited[i]) {
                 int[] p = candidate.get(i);
                 int x = p[0], y = p[1];
+
+                // 백트래킹
                 if (ladder[x][y] != 0 || ladder[x][y+1] != 0) {
                     continue;
                 }
