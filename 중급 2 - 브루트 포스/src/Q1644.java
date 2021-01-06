@@ -12,20 +12,25 @@ public class Q1644 {
         n = Integer.parseInt(br.readLine());
         prime(n);
 
+        long cnt = 0;
         int idx = 1;
         for (int i = 2; i <= n; i++) {
             if (!check[i]) {
                 // System.out.print(i+" ");
                 dp[idx] = dp[idx-1] + i;
                 idx++;
+                cnt++;
             }
         }
 
+        System.out.print(cnt);
+        /*
         int i = 1;
         while (dp[i] != 0) {
             System.out.print(dp[i] + " ");
             i++;
         }
+         */
 
         /*
         for (int i = 0; i <= n; i++) {
