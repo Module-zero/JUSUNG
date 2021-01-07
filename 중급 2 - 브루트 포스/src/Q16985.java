@@ -93,10 +93,6 @@ public class Q16985 {
             return;
         }
 
-        if (index > 0 && !isPossible(tmp_cube[index-1], tmp_cube[index])) {
-            return;
-        }
-
         int[][] facet = tmp_cube[index];
         go2(index+1, tmp_cube);
 
