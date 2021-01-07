@@ -6,8 +6,8 @@ import java.util.StringTokenizer;
 
 public class Q16985 {
     static int[][][] cube = new int[5][5][5];
+    static int[][][] src = new int[5][][];
     static boolean[] check = new boolean[5];
-    static int[] order = new int[5];
     static int[][] delta = {{1, 0, 0}, {-1, 0, 0}, {0, 1, 0}, {0, -1, 0}, {0, 0, 1}, {0, 0, -1}};
     static int min = Integer.MAX_VALUE;
 
@@ -22,6 +22,8 @@ public class Q16985 {
             }
         }
 
+        System.arraycopy(cube, 0, src, 0, 5);
+
         go(0);
 
         if (min == Integer.MAX_VALUE) {
@@ -34,26 +36,25 @@ public class Q16985 {
     static void go(int index) {
 
         if (index == 5) {
-            int[][][] tmp_cube = new int[5][5][5];
-            copyCube(cube, tmp_cube);
-            go2(0, tmp_cube);
+            go2(0);
             return;
         }
 
         for (int i = 0; i < 5; i++) {
             if (!check[i]) {
                 check[i] = true;
-                order[index] = i;
+                cube[index] = src[i];
                 go(index+1);
+                cube[index] = src[index];
                 check[i] = false;
             }
         }
     }
 
-    static void go2(int index, int[][][] tmp_cube) {
+    static void go2(int index) {
 
         if (index == 5) {
-            if (tmp_cube[0][0][0] == 0 || tmp_cube[4][4][4] == 0) {
+            if (cube[0][0][0] == 0 || cube[4][4][4] == 0) {
                 return;
             }
 
@@ -83,7 +84,7 @@ public class Q16985 {
                     int nx = x + delta[i][1];
                     int ny = y + delta[i][2];
                     if (nh >= 0 && nx >= 0 && ny >= 0 && nh < 5 && nx < 5 && ny < 5) {
-                        if (visited[nh][nx][ny] == -1 && tmp_cube[nh][nx][ny] == 1) {
+                        if (visited[nh][nx][ny] == -1 && cube[nh][nx][ny] == 1) {
                             visited[nh][nx][ny] = visited[h][x][y] + 1;
                             q.add(new int[]{nh, nx, ny});
                         }
@@ -93,45 +94,19 @@ public class Q16985 {
             return;
         }
 
-        int[][] facet = tmp_cube[index];
-        go2(index+1, tmp_cube);
-
-        rotate(facet, 1);
-        go2(index+1, tmp_cube);
-        rotate(facet, -1);
-
-        rotate(facet, 2);
-        go2(index+1, tmp_cube);
-        rotate(facet, -2);
-
-        rotate(facet, 3);
-        go2(index+1, tmp_cube);
-        rotate(facet, -3);
-    }
-
-    static void rotate(int[][] facet, int clock_count) {
-
-        int count = Math.abs(clock_count);
-        int[][] tmp_facet = new int[5][5];
-        copyFacet(facet, tmp_facet);
-
-        for (int i = 0; i < count; i++) {
-            for (int row = 0; row < 5; row++) {
-                for (int col = 0; col < 5; col++) {
-                    int new_row = clock_count < 0 ? 4-row : row;
-                    int new_col = clock_count > 0 ? 4-col : col;
-                    facet[new_row][new_col] = tmp_facet[col][row];
-                }
-            }
-            copyFacet(facet, tmp_facet);
+        for (int i = 0; i < 4; i++) {
+            go2(index+1);
+            rotate(cube[index]);
         }
     }
 
-    static void copyCube(int[][][] src, int[][][] dst) {
-        for (int i = 0; i < 5; i++) {
-           for (int j = 0; j < 5; j++) {
-               System.arraycopy(src[order[i]][j], 0, dst[i][j], 0, 5);
-           }
+    static void rotate(int[][] facet) {
+        int[][] tmp_facet = new int[5][5];
+        copyFacet(facet, tmp_facet);
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 5; col++) {
+                facet[row][4-col] = tmp_facet[col][row];
+            }
         }
     }
 
