@@ -25,7 +25,6 @@ public class Q16985 {
         System.arraycopy(cube, 0, src, 0, 5);
 
         go(0);
-
         if (min == Integer.MAX_VALUE) {
             System.out.print(-1);
         } else {
@@ -96,23 +95,17 @@ public class Q16985 {
 
         for (int i = 0; i < 4; i++) {
             go2(index+1);
-            rotate(cube[index]);
+            rotate(index);
         }
     }
 
-    static void rotate(int[][] facet) {
+    static void rotate(int height) {
         int[][] tmp_facet = new int[5][5];
-        copyFacet(facet, tmp_facet);
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 5; col++) {
-                facet[row][4-col] = tmp_facet[col][row];
+                tmp_facet[row][4-col] = cube[height][col][row];
             }
         }
-    }
-
-    static void copyFacet(int[][] src, int[][] dst) {
-        for (int i = 0; i < 5; i++) {
-            System.arraycopy(src[i], 0, dst[i], 0, 5);
-        }
+        cube[height] = tmp_facet;
     }
 }
