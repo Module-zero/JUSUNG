@@ -74,26 +74,6 @@ public class Q16986 {
     }
 
     static int[] fight(int p1, int p2, int[] pos) {
-        /*
-        int[] result = new int[2];
-        int m1 = player[p1][pos[p1]], m2 = player[p2][pos[p2]];
-        if (arr[m1][m2] == 2) {
-            result[0] = p1;
-            result[1] = p2;
-        } else if (arr[m1][m2] == 1) {
-            if (p1 > p2) {
-                result[0] = p1;
-                result[1] = p2;
-            } else {
-                result[0] = p2;
-                result[1] = p1;
-            }
-        } else {
-            result[0] = p2;
-            result[1] = p1;
-        }
-         */
-
         int[] result = {p1, p2};
         int m1 = player[p1][pos[p1]], m2 = player[p2][pos[p2]];
         if (arr[m1][m2] == 0) {
