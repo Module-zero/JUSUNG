@@ -26,7 +26,20 @@ public class Q16958 {
             City c1 = list.get(i);
             for (int j = 0; j < n; j++) {
                 City c2 = list.get(j);
-                map[i][j] = getDirectDist(c1.getX(), c1.getY(), c2.getX(), c2.getY());
+                int d = getDirectDist(c1.getX(), c1.getY(), c2.getX(), c2.getY());
+                if (c1.getS() == 1 && c2.getS() == 1) {
+                    d = Math.min(d, t);
+                }
+                map[i][j] = d;
+            }
+        }
+
+        // 플로이드-워셜 알고리즘
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    map[i][j] = Math.min(map[i][j], map[i][k]+map[k][j]);
+                }
             }
         }
 
@@ -37,36 +50,6 @@ public class Q16958 {
             int b = Integer.parseInt(st.nextToken());
             System.out.println(map[a-1][b-1]);
         }
-    }
-
-    static int getDist(int a, int b) {
-        City c1 = list.get(a); City c2 = list.get(b); int s1 = c1.getS(), s2 = c2.getS();
-        int x1 = c1.getX(), x2 = c2.getX();
-        int y1 = c1.getY(), y2 = c2.getY();
-
-        // c1-c2 까지의 다이렉트 길이
-        int d1 = getDirectDist(x1, y1, x2, y2);
-        if (s1 == 1 && s2 == 1) {
-           d1 = Math.min(d1, t);
-        }
-
-        int d2 = Integer.MAX_VALUE;
-        for (City c : list) {
-            int tmp_d1 = 0, tmp_d2 = 0;
-            if (s1 == 1 && c.getS() == 1) {
-                tmp_d1 = t;
-            } else {
-                tmp_d1 = getDirectDist(x1, y1, c.getX(), c.getY());
-            }
-            if (s2 == 1 && c.getS() == 1) {
-                tmp_d2 = t;
-            } else {
-                tmp_d2 = getDirectDist(x2, y2, c.getX(), c.getY());
-            }
-            d2 = Math.min(d2, tmp_d1+tmp_d2);
-        }
-
-        return Math.min(d1, d2);
     }
 
     static int getDirectDist(int x1, int y1, int x2, int y2) {
