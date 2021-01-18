@@ -5,50 +5,41 @@ import java.util.Stack;
 
 public class Q9935 {
     static Stack<Pair> stack = new Stack<>();
+    static boolean[] erased = new boolean[1000001];
     static StringBuilder answer = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String s = br.readLine();
-        String t = br.readLine();
+        String p = br.readLine();
+        int n = s.length();
+        int m = p.length();
 
-        if (t.length() == 1) {
-            for (int i = 0; i < s.length(); i++) {
-                if (s.charAt(i) != t.charAt(0)) {
-                    answer.append(s.charAt(i));
+        if (m == 1) {
+            for (int i = 0; i < n; i++) {
+                if (s.charAt(i) == p.charAt(0)) {
+                    erased[i] = true;
                 }
             }
         } else {
-            for (int i = 0; i < s.length(); i++) {
-                char ch = s.charAt(i);
-                if (stack.isEmpty()) {
-                    if (ch == t.charAt(0)) {
-                        stack.add(new Pair(i, 0));
-                    } else {
-                        answer.append(ch);
-                    }
+            for (int i = 0; i < n; i++) {
+                char cur = s.charAt(i);
+                if (cur == p.charAt(0)) {
+                    stack.add(new Pair(i, 0));
                 } else {
-                    int nextIndex = stack.peek().t_index + 1;
-                    if (ch == t.charAt(nextIndex)) {
-                        if (nextIndex == t.length() - 1) {
-                            for (int j = 0; j < t.length() - 1; j++) {
-                                stack.pop();
+                    if (!stack.isEmpty()) {
+                        int nIdx = stack.peek().pIdx + 1;
+                        if (cur == p.charAt(nIdx)) {
+                            stack.add(new Pair(i, nIdx));
+                            if (nIdx == m-1) {
+                                for (int j = 0; j < m; j++) {
+                                    int idx = stack.pop().sIdx;
+                                    erased[idx] = true;
+                                }
                             }
                         } else {
-                            stack.add(new Pair(i, nextIndex));
-                        }
-                    } else {
-                        if (ch == t.charAt(0)) {
-                            stack.add(new Pair(i, 0));
-                        } else {
-                            Stack<Character> tmp = new Stack<>();
-                            tmp.add(ch);
                             while (!stack.isEmpty()) {
-                                Pair p = stack.pop();
-                                tmp.add(s.charAt(p.s_index));
-                            }
-                            while (!tmp.isEmpty()) {
-                                answer.append(tmp.pop());
+                                stack.pop();
                             }
                         }
                     }
@@ -56,13 +47,10 @@ public class Q9935 {
             }
         }
 
-        Stack<Character> tmp = new Stack<>();
-        while (!stack.isEmpty()) {
-            Pair p = stack.pop();
-            tmp.add(s.charAt(p.s_index));
-        }
-        while (!tmp.isEmpty()) {
-            answer.append(tmp.pop());
+        for (int i = 0; i < n; i++) {
+            if (!erased[i]) {
+                answer.append(s.charAt(i));
+            }
         }
 
         if (answer.toString().equals("")) {
@@ -73,10 +61,10 @@ public class Q9935 {
     }
 
     static class Pair {
-        int s_index, t_index;
-        public Pair(int s_index, int t_index) {
-            this.s_index = s_index;
-            this.t_index = t_index;
+        int sIdx, pIdx;
+        public Pair(int sIdx, int pIdx) {
+            this.sIdx = sIdx;
+            this.pIdx = pIdx;
         }
     }
 }
