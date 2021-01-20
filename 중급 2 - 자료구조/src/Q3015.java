@@ -6,7 +6,7 @@ import java.util.Stack;
 public class Q3015 {
     static int n;
     static int[] arr = new int[500001];
-    static Stack<Integer> lStack = new Stack<>();
+    static Stack<int[]> lStack = new Stack<>();
     static Stack<Integer> rStack = new Stack<>();
     static long answer = 0;
 
@@ -18,11 +18,17 @@ public class Q3015 {
         }
 
         for (int i = 0; i < n; i++) {
-            while (!lStack.isEmpty() && arr[lStack.peek()] < arr[i]) {
+            int[] pair = {arr[i], 1};
+            while (!lStack.isEmpty() && lStack.peek()[0] <= arr[i]) {
+                int cnt = lStack.peek()[1];
+                if (lStack.peek()[0] == arr[i]) {
+                    pair[1] = cnt + 1;
+                }
+                answer += cnt;
                 lStack.pop();
-                answer++;
             }
-            lStack.push(i);
+
+            lStack.push(pair);
         }
 
         for (int i = n-1; i >= 0; i--) {
@@ -33,15 +39,7 @@ public class Q3015 {
             rStack.push(i);
         }
 
-        /*
-        for (int i = 0; i < n; i++) {
-            System.out.print(left[i]+ " ");
-        } System.out.println();
-        for (int i = 0; i < n; i++) {
-            System.out.print(right[i]+ " ");
-        } System.out.println();
-         */
-
         System.out.print(answer);
     }
 }
+
