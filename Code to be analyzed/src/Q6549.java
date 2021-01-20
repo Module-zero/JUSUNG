@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
+// 6549번. 히스토그램에서 가장 큰 직사각형
 public class Q6549 {
 
     public static void main(String[] args) throws IOException {
