@@ -15,70 +15,39 @@ public class Q6549 {
                 break;
             }
 
-            Stack<Pair> stack = new Stack<>();
-            int[] rec = new int[n];
-            int[] left = new int[n];
-            int[] right = new int[n];
+            int[] h = new int[100001];
+            int[] left = new int[100001];
+            int[] right = new int[100001];
+            Stack<Integer> lStack = new Stack<>();
+            Stack<Integer> rStack = new Stack<>();
 
             for (int i = 0; i < n; i++) {
-                rec[i] = Integer.parseInt(st.nextToken());
+                h[i] = Integer.parseInt(st.nextToken());
             }
 
             for (int i = 0; i < n; i++) {
-                boolean flag = false;
-                while (!stack.isEmpty()) {
-                    Pair top = stack.peek();
-                    if (top.h >= rec[i]) {
-                        Pair tmp = stack.pop();
-                        left[i] = left[tmp.x];
-                        flag = true;
-                    } else {
-                        break;
-                    }
+                left[i] = i;
+                while (!lStack.isEmpty() && h[lStack.peek()] >= h[i]) {
+                    left[i] = left[lStack.pop()];
                 }
-
-                if (!flag) {
-                    left[i] = i;
-                }
-                stack.push(new Pair(i, rec[i]));
+                lStack.push(i);
             }
-
-            stack.clear();
 
             for (int i = n-1; i >= 0; i--) {
-                boolean flag = false;
-                while (!stack.isEmpty()) {
-                    Pair top = stack.peek();
-                    if (top.h >= rec[i]) {
-                        Pair tmp = stack.pop();
-                        right[i] = right[tmp.x];
-                        flag = true;
-                    } else {
-                        break;
-                    }
+                right[i] = i;
+                while (!rStack.isEmpty() && h[rStack.peek()] >= h[i]) {
+                    right[i] = right[rStack.pop()];
                 }
-
-                if (!flag) {
-                    right[i] = i;
-                }
-                stack.push(new Pair(i, rec[i]));
+                rStack.push(i);
             }
 
             long max = Long.MIN_VALUE;
             for (int i = 0; i < n; i++) {
-                int x = right[i] - left[i] + 1;
-                max = Math.max(max, (long)x * (long)rec[i]);
+                int width = right[i] - left[i] + 1;
+                max = Math.max(max, (long)width * (long)h[i]);
             }
 
             System.out.println(max);
-        }
-    }
-
-    static class Pair {
-        private final int x, h;
-        public Pair(int x, int h) {
-            this.x = x;
-            this.h = h;
         }
     }
 }
