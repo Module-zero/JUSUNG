@@ -16,26 +16,24 @@ public class Q11060 {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
+        if (n == 1) {
+            System.out.print(0);
+            return;
+        }
+
         for (int i = 1; i <= n; i++) {
-            int cnt = arr[i];
-            if (cnt == 0) {
+            if (i > 1 && dp[i] == 0) {
                 continue;
             }
-            int num = dp[i] + 1;
-            for (int j = i; j < n && j < i+cnt; j++) {
-                if (dp[j+1] == 0) {
-                    dp[j+1] = num;
+            int cnt = arr[i];
+            for (int j = i; j < n && j < i + cnt; j++) {
+                if (dp[j + 1] == 0) {
+                    dp[j + 1] = dp[i] + 1;
                 } else {
-                    dp[j+1] = Math.min(dp[j+1], num);
+                    dp[j + 1] = Math.min(dp[j + 1], dp[i] + 1);
                 }
             }
         }
-
-        /*
-        for (int i = 1; i <= n; i++) {
-            System.out.print(dp[i] + " ");
-        }
-         */
 
         if (dp[n] == 0) {
             System.out.print(-1);
