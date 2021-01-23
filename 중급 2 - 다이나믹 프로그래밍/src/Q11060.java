@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Q11060 {
@@ -16,29 +17,23 @@ public class Q11060 {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        if (n == 1) {
-            System.out.print(0);
-            return;
-        }
+        Arrays.fill(dp, -1);
+        dp[1] = 0;
 
         for (int i = 1; i <= n; i++) {
-            if (i > 1 && dp[i] == 0) {
+
+            if (dp[i] == -1) {
                 continue;
             }
-            int cnt = arr[i];
-            for (int j = i; j < n && j < i + cnt; j++) {
-                if (dp[j + 1] == 0) {
+
+            int limit = Math.min(n, i + arr[i]);
+            for (int j = i; j < limit; j++) {
+                if (dp[j + 1] == -1 || dp[j + 1] > dp[i] + 1) {
                     dp[j + 1] = dp[i] + 1;
-                } else {
-                    dp[j + 1] = Math.min(dp[j + 1], dp[i] + 1);
                 }
             }
         }
 
-        if (dp[n] == 0) {
-            System.out.print(-1);
-        } else {
-            System.out.print(dp[n]);
-        }
+        System.out.print(dp[n]);
     }
 }
