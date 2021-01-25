@@ -18,17 +18,18 @@ public class Q15486 {
         }
 
         for (int i = 1; i <= n; i++) {
-            long tmp = dp[i-1];
-            int t = arr[0][i];
-            if (arr[0][i-1] == 1) {
-                tmp += arr[1][i-1];
+            long p = dp[i - 1];
+            if (arr[0][i - 1] == 1) {
+                p += arr[1][i - 1];
             }
-            dp[i] = Math.max(dp[i], tmp);
+            dp[i] = Math.max(dp[i], p);
+
+            int t = arr[0][i];
             if (i + t <= n + 1) {
                 dp[i + t] = Math.max(dp[i + t], dp[i] + arr[1][i]);
             }
         }
 
-        System.out.print(Math.max(dp[n], dp[n+1]));
+        System.out.print(Math.max(dp[n], dp[n + 1]));
     }
 }
