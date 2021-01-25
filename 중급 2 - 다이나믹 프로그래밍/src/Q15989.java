@@ -16,9 +16,8 @@ public class Q15989 {
 
         for (int i = 4; i <= 10000; i++) {
             for (int j = 1; j <= 3 ; j++) {
-                int idx = i - j;
                 for (int k = j; k <= 3; k++) {
-                    d[i][j] += d[idx][k];
+                    d[i][j] += d[i - j][k];
                 }
             }
         }
