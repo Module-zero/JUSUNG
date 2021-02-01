@@ -34,12 +34,12 @@ public class Q10942 {
     // 1 : 방문 했는데 팰린드롬 맞음
     static int go(int x, int y) {
 
-        if (x == y) {
-           return d[x][y] = 1;
-        }
-
         if (d[x][y] != 0) {
             return d[x][y];
+        }
+
+        if (x == y) {
+           return d[x][y] = 1;
         }
 
         if (x + 1 == y) {
