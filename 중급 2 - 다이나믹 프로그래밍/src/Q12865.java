@@ -19,5 +19,8 @@ public class Q12865 {
             w[i] = Integer.parseInt(st.nextToken());
             v[i] = Integer.parseInt(st.nextToken());
         }
+
+        for (int i = 1; i <= n; i++) {
+        }
     }
 }
