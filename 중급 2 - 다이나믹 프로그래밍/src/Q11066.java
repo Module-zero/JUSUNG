@@ -8,6 +8,7 @@ public class Q11066 {
     static int[] arr;
     static long[][] d;
     static long[] sum;
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -36,7 +37,9 @@ public class Q11066 {
                 }
             }
 
-            System.out.println(d[0][n-1]);
+            sb.append(d[0][n-1]).append("\n");
         }
+
+        System.out.print(sb);
     }
 }
