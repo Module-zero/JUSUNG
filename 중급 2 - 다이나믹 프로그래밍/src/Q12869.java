@@ -5,7 +5,6 @@ import java.util.StringTokenizer;
 
 public class Q12869 {
     static int n;
-    static int min = Integer.MAX_VALUE;
     static int[] l = new int[3];
     static int[][][] d = new int[61][61][61];
     static int[][] a = {{1, 3, 9}, {1, 9, 3}, {3, 1, 9}, {3, 9, 1}, {9, 1, 3}, {9, 3, 1}};
@@ -28,13 +27,12 @@ public class Q12869 {
 
         d[l[0]][l[1]][l[2]] = 0;
         go(l[0], l[1], l[2]);
-        System.out.print(min);
+        System.out.print(d[0][0][0]);
     }
 
     static void go(int x, int y, int z) {
 
         if (x == 0 && y == 0 && z == 0) {
-            min = Math.min(min, d[x][y][z]);
             return;
         }
 
@@ -43,6 +41,13 @@ public class Q12869 {
             int ny = Math.max(y - a[i][1], 0);
             int nz = Math.max(z - a[i][2], 0);
 
+            if (d[nx][ny][nz] != -1) {
+                if (d[nx][ny][nz] <= d[x][y][z] + 1) {
+                    continue;
+                }
+            }
+
+            d[nx][ny][nz] = d[x][y][z] + 1;
             go(nx, ny, nz);
         }
     }
