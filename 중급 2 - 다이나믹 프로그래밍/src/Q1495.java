@@ -21,7 +21,6 @@ public class Q1495 {
         }
 
         d[0][s] = true;
-
         for (int i = 1; i <= n; i++) {
             for (int j = 0; j <= m; j++) {
                 if (j >= v[i] && d[i-1][j-v[i]]) {
