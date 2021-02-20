@@ -8,6 +8,7 @@ public class Q2294 {
     static int n, k;
     static int[] coins = new int[110];
     static int[] d = new int[10010];
+    static final int limit = 100000;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,7 +19,7 @@ public class Q2294 {
             coins[i] = Integer.parseInt(br.readLine());
         }
 
-        Arrays.fill(d, 100000);
+        Arrays.fill(d, limit);
         d[0] = 0;
 
         for (int i = 1; i <= n; i++) {
@@ -29,7 +30,7 @@ public class Q2294 {
             }
         }
 
-        if (d[k] == 100000) {
+        if (d[k] == limit) {
             System.out.print(-1);
         } else {
             System.out.print(d[k]);
