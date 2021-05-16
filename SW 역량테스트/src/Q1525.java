@@ -31,6 +31,13 @@ public class Q1525 {
         visited.put(startNum, 0);
         while (!q.isEmpty()) {
             int nowNum = q.poll();
+
+            // 3. 123456789 로 바뀌는 경우 정답 출력
+            if (nowNum == 123456789) {
+                System.out.print(visited.get(nowNum));
+                return;
+            }
+
             String nowStr = Integer.toString(nowNum);
             int idx = nowStr.indexOf('9');
             int x = idx / 3;
@@ -54,10 +61,7 @@ public class Q1525 {
             }
         }
 
-        if (visited.containsKey(123456789)) {
-            System.out.print(visited.get(123456789));
-        } else {
-            System.out.print(-1);
-        }
+        // 4. 123456789 로 바뀌지 않는 경우 -1 출력
+        System.out.print(-1);
     }
 }
