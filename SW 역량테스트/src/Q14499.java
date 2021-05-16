@@ -36,47 +36,47 @@ public class Q14499 {
         int y = sy;
 
         for (int i = 0; i < k; i++) {
+
+            // 좌표 이동
             x += dx[dir[i] - 1];
             y += dy[dir[i] - 1];
 
+            // 예외 처리
             if (x < 0 || y < 0 || x >= n || y >= m) {
                 x -= dx[dir[i] - 1];
                 y -= dy[dir[i] - 1];
                 continue;
             }
 
-            int[] tmpDice = new int[7];
-            if (dir[i] == 1) {
-                tmpDice[3] = dice[1];
-                tmpDice[1] = dice[4];
-                tmpDice[4] = dice[6];
-                tmpDice[6] = dice[3];
-                tmpDice[5] = dice[5];
-                tmpDice[2] = dice[2];
-            } else if (dir[i] == 2) {
-                tmpDice[3] = dice[6];
-                tmpDice[1] = dice[3];
-                tmpDice[4] = dice[1];
-                tmpDice[6] = dice[4];
-                tmpDice[5] = dice[5];
-                tmpDice[2] = dice[2];
-            } else if (dir[i] == 3) {
-                tmpDice[1] = dice[5];
-                tmpDice[2] = dice[1];
-                tmpDice[6] = dice[2];
-                tmpDice[5] = dice[6];
-                tmpDice[3] = dice[3];
-                tmpDice[4] = dice[4];
-            } else {
-                tmpDice[1] = dice[2];
-                tmpDice[2] = dice[6];
-                tmpDice[6] = dice[5];
-                tmpDice[5] = dice[1];
-                tmpDice[3] = dice[3];
-                tmpDice[4] = dice[4];
-            }
+            // 원본 저장
+            int d1 = dice[1];
+            int d2 = dice[2];
+            int d3 = dice[3];
+            int d4 = dice[4];
+            int d5 = dice[5];
+            int d6 = dice[6];
 
-            dice = tmpDice;
+            if (dir[i] == 1) {
+                dice[3] = d1;
+                dice[1] = d4;
+                dice[4] = d6;
+                dice[6] = d3;
+            } else if (dir[i] == 2) {
+                dice[3] = d6;
+                dice[1] = d3;
+                dice[4] = d1;
+                dice[6] = d4;
+            } else if (dir[i] == 3) {
+                dice[1] = d5;
+                dice[2] = d1;
+                dice[6] = d2;
+                dice[5] = d6;
+            } else {
+                dice[1] = d2;
+                dice[2] = d6;
+                dice[6] = d5;
+                dice[5] = d1;
+            }
 
             if (board[x][y] == 0) {
                 board[x][y] = dice[6];
